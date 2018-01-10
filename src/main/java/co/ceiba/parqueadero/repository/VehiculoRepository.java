@@ -6,4 +6,6 @@ import co.ceiba.parqueadero.modelo.Vehiculo;
 
 public interface VehiculoRepository {
 	List<Vehiculo> obtenerTodos() throws Exception;
+	boolean insertar(String placa, int cilindraje) throws Exception;
+
 }

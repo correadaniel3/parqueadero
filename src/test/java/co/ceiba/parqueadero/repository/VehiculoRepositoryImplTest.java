@@ -26,5 +26,15 @@ public class VehiculoRepositoryImplTest {
 		result=vehiculoRepository.obtenerTodos();
 		Assert.assertTrue(result.size()>0);
 	}
+	
+	@Test
+	public void testInsertarCarro() throws Exception{
+		Assert.assertTrue(vehiculoRepository.insertar("GBP568", 0));
+	}
+	
+	@Test
+	public void testInsertarMoto() throws Exception{
+		Assert.assertTrue(vehiculoRepository.insertar("G6E504", 500));
+	}
 
 }
