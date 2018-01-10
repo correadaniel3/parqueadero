@@ -38,6 +38,8 @@ public class Parqueadero implements Serializable {
 	@Column(name="fecha_salida")
 	private Calendar fechaSalida;
 
+	public Parqueadero() {}
+	
 	public Parqueadero(Vehiculo vehiculo, Calendar fechaIngreso) {
 		super();
 		this.vehiculo = vehiculo;

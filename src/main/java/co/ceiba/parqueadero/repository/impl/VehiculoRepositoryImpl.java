@@ -36,9 +36,9 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		Vehiculo vehiculo;
 		try {
 			if(cilindraje==0) {
-				vehiculo=new Carro(placa);
+				vehiculo=new Carro(placa.toUpperCase());
 			}else {
-				vehiculo=new Moto(placa,cilindraje);
+				vehiculo=new Moto(placa.toUpperCase(),cilindraje);
 			}
 			entityManager.persist(vehiculo);
 			return true;

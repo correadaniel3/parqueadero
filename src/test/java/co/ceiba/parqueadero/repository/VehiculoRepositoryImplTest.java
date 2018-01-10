@@ -1,11 +1,8 @@
 package co.ceiba.parqueadero.repository;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,29 +22,29 @@ public class VehiculoRepositoryImplTest {
 	VehiculoRepository vehiculoRepository;
 	
 	@Test
-	public void aTestObtenerTodos() throws Exception {
+	public void test1ObtenerTodos() throws Exception {
 		List<Vehiculo> result;
 		result=vehiculoRepository.obtenerTodos();
 		Assert.assertTrue(result.size()>0);
 	}
 	
 	@Test
-	public void bTestInsertarCarro() throws Exception{
-		Assert.assertTrue(vehiculoRepository.insertar("GBP568", 0));;
+	public void test2InsertarCarro() throws Exception{
+		Assert.assertTrue(vehiculoRepository.insertar("GBP568", 0));
 	}
 	
 	@Test
-	public void cTestInsertarMoto() throws Exception{
+	public void test3InsertarMoto() throws Exception{
 		Assert.assertTrue(vehiculoRepository.insertar("G6E504", 500));
 	}
 	
 	@Test
-	public void dTestEliminarMoto() throws Exception{
+	public void test4EliminarMoto() throws Exception{
 		Assert.assertTrue(vehiculoRepository.eliminar("G6E504"));
 	}
 	
 	@Test
-	public void eTestEliminarCarro() throws Exception{
+	public void test5EliminarCarro() throws Exception{
 		Assert.assertTrue(vehiculoRepository.eliminar("GBP568"));
 	}
 
