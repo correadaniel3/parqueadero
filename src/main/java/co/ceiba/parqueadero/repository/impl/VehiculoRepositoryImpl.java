@@ -43,7 +43,20 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			entityManager.persist(vehiculo);
 			return true;
 		}catch(Exception e) {
-			return false;
+			throw new Exception("No fue posible agregar el vehiculo en la base de datos",e);
+		}
+	}
+
+	@Override
+	public boolean eliminar(String placa) throws Exception {
+		try{
+			Vehiculo vehiculo = null;
+			String hql = "FROM Vehiculo as veh WHERE veh.placa = ?";
+			vehiculo = (Vehiculo) entityManager.createQuery(hql).setParameter(1, placa).getSingleResult();
+			entityManager.remove(vehiculo);
+			return true;
+		}catch(Exception e) {
+			throw new Exception("No fue posible eliminar el vehiculo de la base de datos",e);
 		}
 	}
 
