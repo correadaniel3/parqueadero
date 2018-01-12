@@ -16,7 +16,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	@Autowired
 	ParqueaderoRepository parqueaderoRepository;
 	
-	public String patronPlaca="^[A-Z]{3}\\d{3}";
+	private static final String patronPlaca="^[A-Z]{3}\\d{3}";
 
 	@Override
 	public boolean ingresarVehiculoParqueadero(String placa, int cilindraje) throws ParqueaderoServiceException, ParqueaderoException {
