@@ -111,8 +111,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			salida.add(Calendar.MINUTE, 10);
 			parq.setFechaSalida(salida);
 			entityManager.flush();
-			double precioAPagar=calcularMonto(parq);
-			return precioAPagar;
+			return calcularMonto(parq);
 		}catch(Exception e) {
 			throw new Exception("no fue posible registrar la salida del vehiculo"
 					+ "del parqueadero",e);
@@ -130,7 +129,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 				throw new Exception("El parqueadero no puede recibir mas motos");
 			}
 			Calendar fecha=Calendar.getInstance();
-			if(placa.substring(0, 1).toUpperCase().equals("A") && 
+			if(placa.substring(0, 1).equalsIgnoreCase("A") && 
 					(fecha.get(Calendar.DAY_OF_WEEK)!=1 || 
 					fecha.get(Calendar.DAY_OF_WEEK)!=2))  {
 				return false;

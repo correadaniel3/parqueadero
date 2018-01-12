@@ -67,7 +67,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is null ";
 			return (List<Carro>) entityManager.createQuery(hql).getResultList();
 		}catch(Exception e) {
-			throw new Exception("Error al obtener todos los vehiculos de la BD", e);
+			throw new Exception("Error al obtener todos los carros de la BD", e);
 		}
 	}
 
@@ -78,7 +78,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is not null ";
 			return (List<Moto>) entityManager.createQuery(hql).getResultList();
 		}catch(Exception e) {
-			throw new Exception("Error al obtener todos los vehiculos de la BD", e);
+			throw new Exception("Error al obtener todas las motos de la BD", e);
 		}
 	}
 
