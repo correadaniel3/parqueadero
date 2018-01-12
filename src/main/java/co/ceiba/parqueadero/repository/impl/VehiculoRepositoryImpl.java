@@ -32,7 +32,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 	}
 
 	@Override
-	public boolean insertar(String placa, int cilindraje) throws Exception {
+	public Vehiculo insertar(String placa, int cilindraje) throws Exception {
 		Vehiculo vehiculo;
 		try {
 			if(cilindraje==0) {
@@ -41,7 +41,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 				vehiculo=new Moto(placa.toUpperCase(),cilindraje);
 			}
 			entityManager.persist(vehiculo);
-			return true;
+			return vehiculo;
 		}catch(Exception e) {
 			throw new Exception("No fue posible agregar el vehiculo en la base de datos",e);
 		}
@@ -57,6 +57,43 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			return true;
 		}catch(Exception e) {
 			throw new Exception("No fue posible eliminar el vehiculo de la base de datos",e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Carro> obtenerCarros() throws Exception {
+		try {
+			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is null ";
+			return (List<Carro>) entityManager.createQuery(hql).getResultList();
+		}catch(Exception e) {
+			throw new Exception("Error al obtener todos los vehiculos de la BD", e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Moto> obtenerMotos() throws Exception {
+		try {
+			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is not null ";
+			return (List<Moto>) entityManager.createQuery(hql).getResultList();
+		}catch(Exception e) {
+			throw new Exception("Error al obtener todos los vehiculos de la BD", e);
+		}
+	}
+
+	@Override
+	public Vehiculo obtenerPorPlaca(String placa) throws Exception {
+		try{
+			List<Vehiculo> vehiculos=obtenerTodos();
+			for(Vehiculo veh: vehiculos) {
+				if(veh.getPlaca().equals(placa)) {
+					return veh;
+				}
+			}
+			return null;
+		}catch(Exception e) {
+			throw new Exception("No fue posible Obtener el vehiculo de la base de datos",e);
 		}
 	}
 

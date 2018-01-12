@@ -26,10 +26,20 @@ public class Vehiculo implements Serializable {
 		this.placa=placa;
 	}
 	
+	@Column(name="vehiculo_tipo",insertable = false, updatable = false)
+	private String tipo;
+	
 	public Vehiculo() {
 	}
 	
 	public String getPlaca() {
 		return placa;
+	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

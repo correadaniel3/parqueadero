@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import co.ceiba.parqueadero.modelo.Carro;
+import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 
 @RunWith(SpringRunner.class)
@@ -30,12 +32,19 @@ public class VehiculoRepositoryImplTest {
 	
 	@Test
 	public void test2InsertarCarro() throws Exception{
-		Assert.assertTrue(vehiculoRepository.insertar("GBP568", 0));
+		Vehiculo veh= vehiculoRepository.insertar("GBP568", 0);
+		Assert.assertNotEquals(null, veh);
+	}
+	
+	@Test
+	public void test21ObtenerPorPlaca() throws Exception{
+		Assert.assertNotNull(vehiculoRepository.obtenerPorPlaca("ACB105"));
 	}
 	
 	@Test
 	public void test3InsertarMoto() throws Exception{
-		Assert.assertTrue(vehiculoRepository.insertar("G6E504", 500));
+		Vehiculo veh= vehiculoRepository.insertar("G6E504", 500);
+		Assert.assertNotEquals(null, veh);
 	}
 	
 	@Test
@@ -47,5 +56,18 @@ public class VehiculoRepositoryImplTest {
 	public void test5EliminarCarro() throws Exception{
 		Assert.assertTrue(vehiculoRepository.eliminar("GBP568"));
 	}
+	
+	@Test
+	public void test6ObtenerCarros()throws Exception{
+		List<Carro> result= vehiculoRepository.obtenerCarros();
+		Assert.assertTrue(result.size()>0);
+	}
+	
+	@Test
+	public void test7ObtenerMotos()throws Exception{
+		List<Moto> result= vehiculoRepository.obtenerMotos();
+		Assert.assertTrue(result.size()>0);
+	}
+	
 
 }
