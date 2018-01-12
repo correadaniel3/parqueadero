@@ -8,6 +8,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.ceiba.parqueadero.exception.VehiculoException;
 import co.ceiba.parqueadero.modelo.Carro;
 import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Vehiculo;
@@ -22,17 +23,17 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Vehiculo> obtenerTodos() throws Exception {
+	public List<Vehiculo> obtenerTodos() throws VehiculoException {
 		try {
 			String hql = "FROM Vehiculo";
 			return (List<Vehiculo>) entityManager.createQuery(hql).getResultList();
 		}catch(Exception e) {
-			throw new Exception("Error al obtener todos los vehiculos de la BD", e);
+			throw new VehiculoException("Error al obtener todos los vehiculos de la BD", e);
 		}
 	}
 
 	@Override
-	public Vehiculo insertar(String placa, int cilindraje) throws Exception {
+	public Vehiculo insertar(String placa, int cilindraje) throws VehiculoException {
 		Vehiculo vehiculo;
 		try {
 			if(cilindraje==0) {
@@ -43,12 +44,12 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			entityManager.persist(vehiculo);
 			return vehiculo;
 		}catch(Exception e) {
-			throw new Exception("No fue posible agregar el vehiculo en la base de datos",e);
+			throw new VehiculoException("No fue posible agregar el vehiculo en la base de datos",e);
 		}
 	}
 
 	@Override
-	public boolean eliminar(String placa) throws Exception {
+	public boolean eliminar(String placa) throws VehiculoException {
 		try{
 			Vehiculo vehiculo = null;
 			String hql = "FROM Vehiculo as veh WHERE veh.placa = ?";
@@ -56,34 +57,34 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			entityManager.remove(vehiculo);
 			return true;
 		}catch(Exception e) {
-			throw new Exception("No fue posible eliminar el vehiculo de la base de datos",e);
+			throw new VehiculoException("No fue posible eliminar el vehiculo de la base de datos",e);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Carro> obtenerCarros() throws Exception {
+	public List<Carro> obtenerCarros() throws VehiculoException {
 		try {
 			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is null ";
 			return (List<Carro>) entityManager.createQuery(hql).getResultList();
 		}catch(Exception e) {
-			throw new Exception("Error al obtener todos los carros de la BD", e);
+			throw new VehiculoException("Error al obtener todos los carros de la BD", e);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Moto> obtenerMotos() throws Exception {
+	public List<Moto> obtenerMotos() throws VehiculoException {
 		try {
 			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is not null ";
 			return (List<Moto>) entityManager.createQuery(hql).getResultList();
 		}catch(Exception e) {
-			throw new Exception("Error al obtener todas las motos de la BD", e);
+			throw new VehiculoException("Error al obtener todas las motos de la BD", e);
 		}
 	}
 
 	@Override
-	public Vehiculo obtenerPorPlaca(String placa) throws Exception {
+	public Vehiculo obtenerPorPlaca(String placa) throws VehiculoException {
 		try{
 			List<Vehiculo> vehiculos=obtenerTodos();
 			for(Vehiculo veh: vehiculos) {
@@ -93,7 +94,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			}
 			return null;
 		}catch(Exception e) {
-			throw new Exception("No fue posible Obtener el vehiculo de la base de datos",e);
+			throw new VehiculoException("No fue posible Obtener el vehiculo de la base de datos",e);
 		}
 	}
 
