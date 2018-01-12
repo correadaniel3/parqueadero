@@ -81,7 +81,7 @@ public class ParqueaderoRepositoryImplTest {
 	@Test
 	public void test6ObtenerCantidadVehiculos() throws Exception {
 		int[] resultados=parqueaderoRepository.obtenerCantidadVehiculos();
-		Assert.assertEquals(3, resultados[0]);
+		Assert.assertEquals(4, resultados[0]);
 	}
 	
 	@Test
