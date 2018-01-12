@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.modelo.Vehiculo;
@@ -28,26 +30,26 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 	VehiculoRepository vehiculoRepository;
 	
 	@Override
-	public boolean insertar(Vehiculo vehiculo, Calendar fechaIngreso) throws Exception {
+	public boolean insertar(Vehiculo vehiculo, Calendar fechaIngreso) throws ParqueaderoException {
 		Parqueadero parq;
 		try {
 			parq=new Parqueadero(vehiculo, fechaIngreso);
 			entityManager.persist(parq);
 			return true;
 		}catch(Exception e) {
-			throw new Exception("No fue posible agregar el registro al parqueadero"
+			throw new ParqueaderoException("No fue posible agregar el registro al parqueadero"
 					+ " en la base de datos",e);
 		}
 	}
 
 	@Override
-	public boolean eliminar(String placa) throws Exception {
+	public boolean eliminar(String placa) throws ParqueaderoException {
 		try{
 			Parqueadero parq = obtenerPorVehiculo(placa);
 			entityManager.remove(parq);
 			return true;
 		}catch(Exception e) {
-			throw new Exception("No fue posible eliminar el vehiculo del registro del"
+			throw new ParqueaderoException("No fue posible eliminar el vehiculo del registro del"
 					+ " parqueadero en la base de datos",e);
 		}
 	}
@@ -88,7 +90,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Parqueadero obtenerPorVehiculoSinSalir(String placa) throws Exception {
+	public Parqueadero obtenerPorVehiculoSinSalir(String placa) throws ParqueaderoException {
 		try {
 			List<Parqueadero> parq = null;
 			Vehiculo test=new Vehiculo(placa); 
@@ -97,13 +99,13 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 					.getResultList();
 			return parq.get(0);
 		}catch (Exception e) {
-			throw new Exception("No fue posible obtener el registro del vehiculo en el parqueadero "
+			throw new ParqueaderoException("No fue posible obtener el registro del vehiculo en el parqueadero "
 					+ " de la base de datos",e);
 		}
 	}
 
 	@Override
-	public double salidaParqueadero(String placa) throws Exception {
+	public double salidaParqueadero(String placa) throws ParqueaderoException {
 		try{
 			Parqueadero parq= obtenerPorVehiculoSinSalir(placa);
 			Calendar salida=Calendar.getInstance();
@@ -113,20 +115,20 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			entityManager.flush();
 			return calcularMonto(parq);
 		}catch(Exception e) {
-			throw new Exception("no fue posible registrar la salida del vehiculo"
+			throw new ParqueaderoException("no fue posible registrar la salida del vehiculo"
 					+ "del parqueadero",e);
 		}
 	}
 
 	@Override
-	public boolean ingresarVehiculo(String placa, int cilindraje) throws Exception {
+	public boolean ingresarVehiculo(String placa, int cilindraje) throws ParqueaderoException {
 		try {
 			int[] cantidadVehiculos=obtenerCantidadVehiculos();
 			if(cantidadVehiculos[0]>20 && cilindraje==0) {
-				throw new Exception("El parqueadero no puede recibir mas carros");
+				throw new ParqueaderoException("El parqueadero no puede recibir mas carros");
 			}
 			if(cantidadVehiculos[1]>10 && cilindraje >0) {
-				throw new Exception("El parqueadero no puede recibir mas motos");
+				throw new ParqueaderoException("El parqueadero no puede recibir mas motos");
 			}
 			Calendar fecha=Calendar.getInstance();
 			if(placa.substring(0, 1).equalsIgnoreCase("A") && 
@@ -141,27 +143,27 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			insertar(vehiculo, fecha);
 			return true;
 		}catch(Exception e) {
-			throw new Exception("No fue posible agregar el registro al parqueadero"
+			throw new ParqueaderoException("No fue posible agregar el registro al parqueadero"
 					+ " en la base de datos",e);
 		}
 	}
 
 	@Override
-	public int[] obtenerCantidadVehiculos() throws Exception {
+	public int[] obtenerCantidadVehiculos() throws ParqueaderoException {
 		try {
 			int[] totales= {0,0};
 			totales[0]=vehiculoRepository.obtenerCarros().size();
 			totales[1]=vehiculoRepository.obtenerMotos().size();
 			return totales;
 		}catch(Exception e) {
-			throw new Exception("Error al calcular la cantidad de vehiculos"
+			throw new ParqueaderoException("Error al calcular la cantidad de vehiculos"
 					+ " en el parqueadero", e);
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Parqueadero obtenerPorVehiculo(String placa) throws Exception {
+	public Parqueadero obtenerPorVehiculo(String placa) throws ParqueaderoException {
 		try {
 			List<Parqueadero> parq = null;
 			String hql = "FROM Parqueadero";
@@ -175,7 +177,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			}
 			return null;
 		}catch (Exception e) {
-			throw new Exception("No fue posible obtener el registro del vehiculo en el parqueadero "
+			throw new ParqueaderoException("No fue posible obtener el registro del vehiculo en el parqueadero "
 					+ " de la base de datos",e);
 		}
 	}
