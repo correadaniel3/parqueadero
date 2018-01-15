@@ -81,7 +81,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 			}
 			Calendar fecha=Calendar.getInstance();
 			if(placa.substring(0, 1).equalsIgnoreCase(Constantes.LETRA_PLACA) && 
-					(Constantes.DIAS_RESTRINGIDOS.contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
+					(Constantes.getDiasRestringidos().contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
 				throw new ParqueaderoException("Esta placa no puede ser utilizada los dias"
 						+ "lunes y domingo");
 			}
