@@ -13,7 +13,7 @@ import co.ceiba.parqueadero.logica.ParqueaderoLogica;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.service.ParqueaderoService;
-import co.ceiba.parqueadero.utils.Logica;
+import co.ceiba.parqueadero.utils.Constantes;
 
 @Transactional
 @Service
@@ -30,7 +30,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		if(placa.isEmpty()) {
 			throw new ParqueaderoServiceException("La placa del vehiculo no puede ser vacia");
 		}
-		if(!placa.matches(Logica.PATRON_PLACA)) {
+		if(!placa.matches(Constantes.PATRON_PLACA)) {
 			throw new ParqueaderoServiceException("No se ha ingresado una placa valida");
 		}
 		if(cilindraje <0) {
@@ -52,7 +52,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		if(placa.isEmpty()) {
 			throw new ParqueaderoServiceException("La placa del vehiculo no puede ser vacia");
 		}
-		if(!placa.matches(Logica.PATRON_PLACA)) {
+		if(!placa.matches(Constantes.PATRON_PLACA)) {
 			throw new ParqueaderoServiceException("No se ha ingresado una placa valida");
 		}
 		try {

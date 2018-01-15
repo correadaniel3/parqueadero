@@ -20,7 +20,8 @@ public class ParqueaderoController {
 	@Autowired
 	ParqueaderoService parqueaderoService;
 	
-	 @RequestMapping(path="/ingresar/placa={placa}&cilindraje={cilindraje}", method = RequestMethod.GET)
+	 @RequestMapping(path="/ingresar/placa={placa}&cilindraje={cilindraje}", 
+			 method = RequestMethod.GET)
 	 public boolean ingresar(@PathVariable String placa,
 			 @PathVariable String cilindraje) throws ParqueaderoServiceException {
 				return parqueaderoService.ingresarVehiculoParqueadero(placa, 

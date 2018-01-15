@@ -15,7 +15,7 @@ import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
-import co.ceiba.parqueadero.utils.Logica;
+import co.ceiba.parqueadero.utils.Constantes;
 
 @Transactional
 @Service
@@ -34,19 +34,19 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		long horasDia= horas%24;
 		double monto=0;
 		if(parqueadero.getVehiculo().getTipo().equals("2")) {
-			if(horasDia>=Logica.MINIMO_HORAS_DIA) {
-				monto=(dias+1)*Logica.DIA_CARRO;
+			if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
+				monto=(dias+1)*Constantes.DIA_CARRO;
 			}else{
-				monto=dias*Logica.DIA_CARRO + horasDia*Logica.HORA_CARRO;
+				monto=dias*Constantes.DIA_CARRO + horasDia*Constantes.HORA_CARRO;
 			}
 		}else if(parqueadero.getVehiculo().getTipo().equals("1")) {
 			Moto moto= (Moto)parqueadero.getVehiculo();
-			if(horasDia>=Logica.MINIMO_HORAS_DIA) {
-				monto=(dias+1)*Logica.DIA_MOTO;
+			if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
+				monto=(dias+1)*Constantes.DIA_MOTO;
 			}else {
-				monto=dias*Logica.DIA_MOTO + horasDia*Logica.HORA_MOTO;
+				monto=dias*Constantes.DIA_MOTO + horasDia*Constantes.HORA_MOTO;
 			}
-			if(moto.getCilindraje()>=Logica.CILINDRAJE) {
+			if(moto.getCilindraje()>=Constantes.CILINDRAJE) {
 				monto+=2000;
 			}
 		}
@@ -73,15 +73,15 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	public boolean ingresarVehiculo(String placa, int cilindraje) throws ParqueaderoLogicaException {
 		try {
 			int[] cantidadVehiculos=parqueaderoRepository.obtenerCantidadVehiculos();
-			if(cantidadVehiculos[0]>Logica.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
+			if(cantidadVehiculos[0]>Constantes.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
 				throw new ParqueaderoException("El parqueadero no puede recibir mas carros");
 			}
-			if(cantidadVehiculos[1]>Logica.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
+			if(cantidadVehiculos[1]>Constantes.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
 				throw new ParqueaderoException("El parqueadero no puede recibir mas motos");
 			}
 			Calendar fecha=Calendar.getInstance();
-			if(placa.substring(0, 1).equalsIgnoreCase(Logica.LETRA_PLACA) && 
-					(Logica.DIAS_RESTRINGIDOS.contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
+			if(placa.substring(0, 1).equalsIgnoreCase(Constantes.LETRA_PLACA) && 
+					(Constantes.DIAS_RESTRINGIDOS.contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
 				throw new ParqueaderoException("Esta placa no puede ser utilizada los dias"
 						+ "lunes y domingo");
 			}
