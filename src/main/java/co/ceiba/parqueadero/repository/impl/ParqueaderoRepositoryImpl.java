@@ -2,8 +2,6 @@ package co.ceiba.parqueadero.repository.impl;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -12,12 +10,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import co.ceiba.parqueadero.exception.ParqueaderoException;
-import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
-import co.ceiba.parqueadero.utils.Tarifa;
 
 @Transactional
 @Repository
@@ -54,39 +50,6 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 
-	@Override
-	public double calcularMonto(Parqueadero parqueadero) {
-		long horas=cantidadHoras(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
-		Tarifa tarifa=new Tarifa();
-		long dias= horas/24;
-		long horasDia= horas%24;
-		double monto=0;
-		if(parqueadero.getVehiculo().getTipo().equals("2")) {
-			if(horasDia>=9) {
-				monto=(dias+1)*tarifa.getDiaCarro();
-			}else{
-				monto=dias*tarifa.getDiaCarro() + horasDia*tarifa.getHoraCarro();
-			}
-		}else if(parqueadero.getVehiculo().getTipo().equals("1")) {
-			Moto moto= (Moto)parqueadero.getVehiculo();
-			if(horasDia>=9) {
-				monto=(dias+1)*tarifa.getDiaMoto();
-			}else {
-				monto=dias*tarifa.getDiaMoto() + horasDia*tarifa.getHoraMoto();
-			}
-			if(moto.getCilindraje()>=500) {
-				monto+=2000;
-			}
-		}
-		return monto;
-	}
-	
-	@Override
-	public long cantidadHoras(Calendar ingreso, Calendar salida) {
-		long end= salida.getTimeInMillis();
-		long start= ingreso.getTimeInMillis();
-		return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -104,49 +67,6 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 
-	@Override
-	public double salidaParqueadero(String placa) throws ParqueaderoException {
-		try{
-			Parqueadero parq= obtenerPorVehiculoSinSalir(placa);
-			Calendar salida=Calendar.getInstance();
-			salida.add(Calendar.HOUR_OF_DAY, 8);
-			salida.add(Calendar.MINUTE, 10);
-			parq.setFechaSalida(salida);
-			entityManager.flush();
-			return calcularMonto(parq);
-		}catch(Exception e) {
-			throw new ParqueaderoException("no fue posible registrar la salida del vehiculo"
-					+ "del parqueadero",e);
-		}
-	}
-
-	@Override
-	public boolean ingresarVehiculo(String placa, int cilindraje) throws ParqueaderoException {
-		try {
-			int[] cantidadVehiculos=obtenerCantidadVehiculos();
-			if(cantidadVehiculos[0]>20 && cilindraje==0) {
-				throw new ParqueaderoException("El parqueadero no puede recibir mas carros");
-			}
-			if(cantidadVehiculos[1]>10 && cilindraje >0) {
-				throw new ParqueaderoException("El parqueadero no puede recibir mas motos");
-			}
-			Calendar fecha=Calendar.getInstance();
-			if(placa.substring(0, 1).equalsIgnoreCase("A") && 
-					(fecha.get(Calendar.DAY_OF_WEEK)!=1 || 
-					fecha.get(Calendar.DAY_OF_WEEK)!=2))  {
-				return false;
-			}
-			Vehiculo vehiculo=vehiculoRepository.obtenerPorPlaca(placa);
-			if(vehiculo==null) {
-				vehiculo=vehiculoRepository.insertar(placa, cilindraje);
-			}
-			insertar(vehiculo, fecha);
-			return true;
-		}catch(Exception e) {
-			throw new ParqueaderoException("No fue posible agregar el registro al parqueadero"
-					+ " en la base de datos",e);
-		}
-	}
 
 	@Override
 	public int[] obtenerCantidadVehiculos() throws ParqueaderoException {
@@ -179,6 +99,19 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}catch (Exception e) {
 			throw new ParqueaderoException("No fue posible obtener el registro del vehiculo en el parqueadero "
 					+ " de la base de datos",e);
+		}
+	}
+
+	@Override
+	public boolean actualizar(Parqueadero parqueadero) throws ParqueaderoException {
+		try {
+			Parqueadero parq= obtenerPorVehiculo(parqueadero.getVehiculo().getPlaca());
+			parq.setFechaSalida(parqueadero.getFechaSalida());
+			entityManager.flush();
+			return true;
+		} catch (Exception e) {
+			throw new ParqueaderoException("No fue posible actualizar el registro del vehiculo"
+					+ "en el parqueadero", e);
 		}
 	}
 	
