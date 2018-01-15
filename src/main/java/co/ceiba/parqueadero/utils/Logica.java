@@ -23,5 +23,7 @@ public final class Logica {
 		add(2);
 	}};
 	public static final String PATRON_PLACA="^[A-Z]{3}\\d{3}";
+	
+	private Logica() {}
 
 }

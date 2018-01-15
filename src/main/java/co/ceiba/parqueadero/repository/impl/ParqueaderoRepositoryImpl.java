@@ -76,8 +76,8 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			parq = (List<Parqueadero>) entityManager.createQuery(hql).getResultList();
 			return parq;
 		}catch (Exception e) {
-			throw new ParqueaderoException("No fue posible obtener el registro del vehiculo en el parqueadero "
-					+ " de la base de datos",e);
+			throw new ParqueaderoException("No fue posible obtener el registro de los"
+					+ " vehiculos en el parqueadero de la base de datos",e);
 		}
 	}
 
@@ -111,8 +111,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			}
 			return null;
 		}catch (Exception e) {
-			throw new ParqueaderoException("No fue posible obtener el registro del vehiculo en el parqueadero "
-					+ " de la base de datos",e);
+			throw new ParqueaderoException("No fue posible obtener el vehiculo",e);
 		}
 	}
 

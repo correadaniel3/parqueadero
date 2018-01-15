@@ -64,7 +64,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	}
 
 	@Override
-	public List<Parqueadero> obtenerVehiculos() throws ParqueaderoServiceException, ParqueaderoException {
+	public List<Parqueadero> obtenerVehiculos() throws ParqueaderoException {
 		return parqueaderorepository.obtenerVehiculos();
 	}
 
