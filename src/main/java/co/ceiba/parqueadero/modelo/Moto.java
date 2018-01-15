@@ -5,11 +5,10 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+@SuppressWarnings("serial")
 @Entity
 @DiscriminatorValue("1")
 public class Moto extends Vehiculo {
-	
-	private static final long serialVersionUID = 1L;
 	
 	@Column(name="cilindraje")
 	@NotNull

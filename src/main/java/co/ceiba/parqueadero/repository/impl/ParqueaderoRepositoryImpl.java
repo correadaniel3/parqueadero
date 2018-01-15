@@ -66,6 +66,20 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 					+ " de la base de datos",e);
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Parqueadero> obtenerVehiculos() throws ParqueaderoException {
+		try {
+			List<Parqueadero> parq = null;
+			String hql = "FROM Parqueadero as parq WHERE parq.fechaSalida is null";
+			parq = (List<Parqueadero>) entityManager.createQuery(hql).getResultList();
+			return parq;
+		}catch (Exception e) {
+			throw new ParqueaderoException("No fue posible obtener el registro del vehiculo en el parqueadero "
+					+ " de la base de datos",e);
+		}
+	}
 
 
 	@Override

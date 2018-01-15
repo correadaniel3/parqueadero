@@ -1,11 +1,17 @@
 package co.ceiba.parqueadero.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
 import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
 import co.ceiba.parqueadero.logica.ParqueaderoLogica;
+import co.ceiba.parqueadero.modelo.Parqueadero;
+import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.service.ParqueaderoService;
 import co.ceiba.parqueadero.utils.Logica;
 
@@ -15,6 +21,9 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	
 	@Autowired
 	ParqueaderoLogica parqueaderoLogica;
+	
+	@Autowired
+	ParqueaderoRepository parqueaderorepository;
 	
 	@Override
 	public boolean ingresarVehiculoParqueadero(String placa, int cilindraje) throws ParqueaderoServiceException {
@@ -52,6 +61,11 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 			throw new ParqueaderoServiceException("No fue posible registrar la"
 					+ " salida del vehiculo",e);
 		}
+	}
+
+	@Override
+	public List<Parqueadero> obtenerVehiculos() throws ParqueaderoServiceException, ParqueaderoException {
+		return parqueaderorepository.obtenerVehiculos();
 	}
 
 }

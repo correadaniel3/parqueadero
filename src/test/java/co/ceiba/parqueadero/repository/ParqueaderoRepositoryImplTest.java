@@ -77,6 +77,10 @@ public class ParqueaderoRepositoryImplTest {
 		Assert.assertTrue(parqueaderoRepository.eliminar("ACB105"));
 	}
 	
+	@Test
+	public void testObtenerVehiculos() throws ParqueaderoException {
+		Assert.assertNotNull(parqueaderoRepository.obtenerVehiculos());
+	}
 	
 	
 

@@ -9,14 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+
+@SuppressWarnings("serial")
 @Entity
 @Inheritance
 @DiscriminatorColumn(name="vehiculo_tipo")
 @Table(name="vehiculo")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vehiculo implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
+		
 	@Id
 	@Column(name="placa")
 	private String placa;
@@ -39,9 +42,10 @@ public class Vehiculo implements Serializable {
 	public String getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	
 }
