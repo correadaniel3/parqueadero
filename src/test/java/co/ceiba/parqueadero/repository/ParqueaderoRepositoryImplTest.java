@@ -11,6 +11,7 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.modelo.Parqueadero;
@@ -42,6 +43,15 @@ public class ParqueaderoRepositoryImplTest {
 	public void test1Insertar() {
 		try {
 			Assert.assertTrue(parqueaderoRepository.insertar(veh, entrada));
+		} catch (ParqueaderoException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test(expected=TransactionSystemException.class)
+	public void test11InsertarFallido() {
+		try {
+			Assert.assertTrue(parqueaderoRepository.insertar(new Vehiculo(""), entrada));
 		} catch (ParqueaderoException e) {
 			e.printStackTrace();
 		}

@@ -33,7 +33,7 @@ public class VehiculoRepositoryImplTest {
 	@Test
 	public void test2InsertarCarro() throws Exception{
 		Vehiculo veh= vehiculoRepository.insertar("GBP568", 0);
-		Assert.assertNotEquals(null, veh);
+		Assert.assertNotNull(veh);
 	}
 	
 	@Test
@@ -44,7 +44,7 @@ public class VehiculoRepositoryImplTest {
 	@Test
 	public void test3InsertarMoto() throws Exception{
 		Vehiculo veh= vehiculoRepository.insertar("G6E504", 500);
-		Assert.assertNotEquals(null, veh);
+		Assert.assertNotNull(veh);
 	}
 	
 	@Test
