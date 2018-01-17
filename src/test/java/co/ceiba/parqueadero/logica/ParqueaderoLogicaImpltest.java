@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
 import co.ceiba.parqueadero.logica.ParqueaderoLogica;
+import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
@@ -31,16 +32,23 @@ public class ParqueaderoLogicaImpltest {
 	@Autowired
 	ParqueaderoRepository parqueaderoRepository;
 	
-	Vehiculo veh;
-	Parqueadero parq;
+	Vehiculo veh, moto, moto2;
+	Parqueadero parq, parqMoto, parqMoto2;
 	Calendar entrada;
 	Calendar salida;
 	
 	@Before
 	public void inicializacion() {
 		veh=new Vehiculo("XYZ105");
+		moto=new Moto("FOD223",200);
+		moto2=new Moto("FOD223",550);
+		moto.setTipo("1");
+		moto2.setTipo("1");
 		veh.setTipo("2");
 		parq=new Parqueadero(veh,Calendar.getInstance());
+		parqMoto=new Parqueadero(moto,Calendar.getInstance());
+		parqMoto2=new Parqueadero(moto2,Calendar.getInstance());
+		
 		entrada=Calendar.getInstance();
 		salida=Calendar.getInstance();
 	}
@@ -89,6 +97,20 @@ public class ParqueaderoLogicaImpltest {
 		parq.setFechaSalida(salida);
 		double monto=parqueaderoLogica.calcularMonto(parq);
 		Assert.assertEquals(5000,monto,0f);
+	}
+	@Test
+	public void test33CalcularMonto(){
+		salida.add(Calendar.HOUR_OF_DAY,5);
+		parqMoto.setFechaSalida(salida);
+		double monto=parqueaderoLogica.calcularMonto(parqMoto);
+		Assert.assertEquals(2500,monto,0f);
+	}
+	@Test
+	public void test34CalcularMonto(){
+		salida.add(Calendar.HOUR_OF_DAY,5);
+		parqMoto2.setFechaSalida(salida);
+		double monto=parqueaderoLogica.calcularMonto(parqMoto2);
+		Assert.assertEquals(4500,monto,0f);
 	}
 
 	@Test

@@ -101,7 +101,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 					+ " en la base de datos",e);
 		}
 	}
-	public void validaciones(String placa, int cilindraje, Calendar fecha) throws ParqueaderoException, VehiculoException {
+	public void validaciones(String placa, int cilindraje, Calendar fecha) throws Exception {
 		validarExistencia(placa);
 		validarCantidad(cilindraje);
 		validarRestricciones(placa, fecha);
