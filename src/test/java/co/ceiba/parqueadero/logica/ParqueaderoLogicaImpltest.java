@@ -54,10 +54,16 @@ public class ParqueaderoLogicaImpltest {
 		}
 	}
 	
+	
 	@Test
 	public void test2CantidadHoras() {
 		salida.add(Calendar.HOUR_OF_DAY, 11);
 		Assert.assertEquals(11,parqueaderoLogica.cantidadHoras(entrada, salida));
+	}
+	@Test
+	public void test21CantidadMinutos() {
+		salida.add(Calendar.MINUTE, 2);
+		Assert.assertEquals(2,parqueaderoLogica.cantidadMinutos(entrada, salida));
 	}
 	
 	@Test
@@ -88,7 +94,7 @@ public class ParqueaderoLogicaImpltest {
 	@Test
 	public void test4SalidaParqueadero() {
 		try {
-			Assert.assertEquals(8000,parqueaderoLogica.salidaParqueadero("XYZ105"),0f);
+			Assert.assertEquals(1000,parqueaderoLogica.salidaParqueadero("XYZ105"),0f);
 		} catch (ParqueaderoLogicaException e) {
 			e.printStackTrace();
 		}

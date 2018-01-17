@@ -60,6 +60,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			String hql = "FROM Parqueadero as parq WHERE parq.vehiculo = ? AND parq.fechaSalida is null";
 			parq = (List<Parqueadero>) entityManager.createQuery(hql).setParameter(1, test)
 					.getResultList();
+			if(parq.isEmpty()) {return null;}
 			return parq.get(0);
 		}catch (Exception e) {
 			throw new ParqueaderoException("No fue posible obtener el registro del vehiculo en el parqueadero "
@@ -82,19 +83,6 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 	}
 
 
-	@Override
-	public int[] obtenerCantidadVehiculos() throws ParqueaderoException {
-		try {
-			int[] totales= {0,0};
-			totales[0]=vehiculoRepository.obtenerCarros().size();
-			totales[1]=vehiculoRepository.obtenerMotos().size();
-			return totales;
-		}catch(Exception e) {
-			throw new ParqueaderoException("Error al calcular la cantidad de vehiculos"
-					+ " en el parqueadero", e);
-		}
-	}
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public Parqueadero obtenerPorVehiculo(String placa) throws ParqueaderoException {
@@ -116,12 +104,12 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 	}
 
 	@Override
-	public boolean actualizar(Parqueadero parqueadero) throws ParqueaderoException {
+	public Parqueadero actualizar(String placa, Calendar fechaSalida) throws ParqueaderoException {
 		try {
-			Parqueadero parq= obtenerPorVehiculo(parqueadero.getVehiculo().getPlaca());
-			parq.setFechaSalida(parqueadero.getFechaSalida());
+			Parqueadero parq= obtenerPorVehiculoSinSalir(placa);
+			parq.setFechaSalida(fechaSalida);
 			entityManager.flush();
-			return true;
+			return parq;
 		} catch (Exception e) {
 			throw new ParqueaderoException("No fue posible actualizar el registro del vehiculo"
 					+ "en el parqueadero", e);

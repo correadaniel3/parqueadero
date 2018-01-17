@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
+import co.ceiba.parqueadero.exception.VehiculoException;
 import co.ceiba.parqueadero.logica.ParqueaderoLogica;
 import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
@@ -30,38 +31,53 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	@Override
 	public double calcularMonto(Parqueadero parqueadero) {
 		long horas=cantidadHoras(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
+		long minutos=cantidadMinutos(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
+		long minutosHora=minutos%60;
 		long dias= horas/24;
 		long horasDia= horas%24;
 		double monto=0;
+		if(minutosHora>0) {horasDia++;}
 		if(parqueadero.getVehiculo().getTipo().equals("2")) {
-			if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
-				monto=(dias+1)*Constantes.DIA_CARRO;
-			}else{
-				monto=dias*Constantes.DIA_CARRO + horasDia*Constantes.HORA_CARRO;
-			}
+			monto=calcularMontoCarro(dias,horasDia);
 		}else if(parqueadero.getVehiculo().getTipo().equals("1")) {
 			Moto moto= (Moto)parqueadero.getVehiculo();
-			if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
-				monto=(dias+1)*Constantes.DIA_MOTO;
-			}else {
-				monto=dias*Constantes.DIA_MOTO + horasDia*Constantes.HORA_MOTO;
-			}
-			if(moto.getCilindraje()>=Constantes.CILINDRAJE) {
-				monto+=2000;
-			}
+			monto=calcularMontoMoto(dias, horasDia, moto);
 		}
+		return monto;
+	}
+	
+	//Por hacer test
+	private double calcularMontoCarro(long dias, long horasDia) {
+		double monto=0;
+		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
+			monto=(dias+1)*Constantes.DIA_CARRO;
+		}else{
+			monto=dias*Constantes.DIA_CARRO + horasDia*Constantes.HORA_CARRO;
+		}
+		if(monto==0) {monto=Constantes.HORA_CARRO;}
+		return monto;
+	}
+	
+	//Por hacer test
+	private double calcularMontoMoto(long dias, long horasDia, Moto moto) {
+		double monto=0;
+		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
+			monto=(dias+1)*Constantes.DIA_MOTO;
+		}else {
+			monto=dias*Constantes.DIA_MOTO + horasDia*Constantes.HORA_MOTO;
+		}
+		if(moto.getCilindraje()>=Constantes.CILINDRAJE) {
+			monto+=2000;
+		}
+		if(monto==0) {monto=Constantes.HORA_MOTO;}
 		return monto;
 	}
 
 	@Override
 	public double salidaParqueadero(String placa) throws ParqueaderoLogicaException {
 		try{
-			Parqueadero parq= parqueaderoRepository.obtenerPorVehiculoSinSalir(placa);
 			Calendar salida=Calendar.getInstance();
-			salida.add(Calendar.HOUR_OF_DAY, 8); //Codigo por eliminar
-			salida.add(Calendar.MINUTE, 10);  //Codigo por eliminar
-			parq.setFechaSalida(salida);
-			parqueaderoRepository.actualizar(parq);
+			Parqueadero parq=parqueaderoRepository.actualizar(placa, salida);
 			return calcularMonto(parq);
 		}catch(Exception e) {
 			throw new ParqueaderoLogicaException("no fue posible registrar la salida del vehiculo"
@@ -72,19 +88,8 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	@Override
 	public boolean ingresarVehiculo(String placa, int cilindraje) throws ParqueaderoLogicaException {
 		try {
-			int[] cantidadVehiculos=parqueaderoRepository.obtenerCantidadVehiculos();
-			if(cantidadVehiculos[0]>Constantes.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
-				throw new ParqueaderoException("El parqueadero no puede recibir mas carros");
-			}
-			if(cantidadVehiculos[1]>Constantes.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
-				throw new ParqueaderoException("El parqueadero no puede recibir mas motos");
-			}
 			Calendar fecha=Calendar.getInstance();
-			if(placa.substring(0, 1).equalsIgnoreCase(Constantes.LETRA_PLACA) && 
-					(Constantes.getDiasRestringidos().contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
-				throw new ParqueaderoException("Esta placa no puede ser utilizada los dias"
-						+ "lunes y domingo");
-			}
+			validaciones(placa, cilindraje, fecha);
 			Vehiculo vehiculo=vehiculoRepository.obtenerPorPlaca(placa);
 			if(vehiculo==null) {
 				vehiculo=vehiculoRepository.insertar(placa, cilindraje);
@@ -96,12 +101,49 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 					+ " en la base de datos",e);
 		}
 	}
+	public void validaciones(String placa, int cilindraje, Calendar fecha) throws ParqueaderoException, VehiculoException {
+		validarExistencia(placa);
+		validarCantidad(cilindraje);
+		validarRestricciones(placa, fecha);
+	}
+	public void validarExistencia(String placa) throws ParqueaderoException {
+		Parqueadero parq=parqueaderoRepository.obtenerPorVehiculoSinSalir(placa);
+		if(parq!=null) {
+			throw new ParqueaderoException("El vehiculo ya se encuentra en el parqueadero ");
+		}
+	}
+	
+	public void validarRestricciones(String placa, Calendar fecha) throws ParqueaderoException {
+		if(placa.substring(0, 1).equalsIgnoreCase(Constantes.LETRA_PLACA) && 
+				(Constantes.getDiasRestringidos().contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
+			throw new ParqueaderoException("Esta placa no puede ser utilizada los dias"
+					+ "lunes y domingo");
+		}
+	}
+	
+	public void validarCantidad(int cilindraje) throws VehiculoException {
+		int cantidadCarros=vehiculoRepository.obtenerCarros().size();
+		int cantidadMotos=vehiculoRepository.obtenerMotos().size();
+		if(cantidadCarros>Constantes.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
+			throw new VehiculoException("El parqueadero no puede recibir mas carros");
+		}
+		if(cantidadMotos>Constantes.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
+			throw new VehiculoException("El parqueadero no puede recibir mas motos");
+		}
+	}
 
 	@Override
 	public long cantidadHoras(Calendar ingreso, Calendar salida) {
 		long end= salida.getTimeInMillis();
 		long start= ingreso.getTimeInMillis();
 		return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
+	}
+	
+	@Override
+	public long cantidadMinutos(Calendar ingreso, Calendar salida) {
+		long end= salida.getTimeInMillis();
+		long start= ingreso.getTimeInMillis();
+		return TimeUnit.MILLISECONDS.toMinutes(Math.abs(end - start));
 	}
 
 }

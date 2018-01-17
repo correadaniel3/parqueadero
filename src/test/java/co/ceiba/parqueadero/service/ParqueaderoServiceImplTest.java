@@ -31,7 +31,7 @@ public class ParqueaderoServiceImplTest {
 
 	@Test
 	public void test2SalidaVehiculoParqueadero() throws ParqueaderoServiceException, ParqueaderoException {
-		Assert.assertEquals(8000,parqueaderoService.salidaVehiculoParqueadero("UVW987"),0f);
+		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero("UVW987"),0f);
 	}
 	
 	@Test

@@ -10,4 +10,5 @@ public interface ParqueaderoLogica {
 	double salidaParqueadero(String placa) throws ParqueaderoLogicaException;
 	boolean ingresarVehiculo(String placa, int cilindraje) throws ParqueaderoLogicaException;
 	long cantidadHoras(Calendar ingreso, Calendar salida);
+	long cantidadMinutos(Calendar ingreso, Calendar salida);
 }

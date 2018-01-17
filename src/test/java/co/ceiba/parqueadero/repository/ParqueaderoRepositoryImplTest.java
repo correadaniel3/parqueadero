@@ -60,17 +60,12 @@ public class ParqueaderoRepositoryImplTest {
 	@Test
 	public void test4Actualizar() {
 		try {
-			Assert.assertTrue(parqueaderoRepository.actualizar(parq));
+			Assert.assertNotNull(parqueaderoRepository.actualizar("ACB105",salida));
 		} catch (ParqueaderoException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	@Test
-	public void test5ObtenerCantidadVehiculos() throws Exception {
-		int[] resultados=parqueaderoRepository.obtenerCantidadVehiculos();
-		Assert.assertEquals(4, resultados[0]);
-	}
 	
 	@Test
 	public void test6Eliminar() throws Exception {
