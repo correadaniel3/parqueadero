@@ -38,5 +38,39 @@ public class ParqueaderoServiceImplTest {
 	public void test3Borrado() throws ParqueaderoException {
 		parqueaderoRepository.eliminar("UVW987");
 	}
+	
+	@Test(expected=ParqueaderoServiceException.class)
+	public void ingresarVehiculoPlacaVacia() throws ParqueaderoServiceException {
+		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("", 0));
+	}
+	
+	@Test(expected=ParqueaderoServiceException.class)
+	public void ingresarVehiculoPlacaInvalida() throws ParqueaderoServiceException {
+		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("AX12", 0));
+	}
+	
+	@Test(expected=ParqueaderoServiceException.class)
+	public void ingresarVehiculoCilindrajeInvalido() throws ParqueaderoServiceException {
+		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("BGR123", -12));
+	}
+	@Test(expected=ParqueaderoServiceException.class)
+	public void ingresarVehiculoExistente() throws ParqueaderoServiceException {
+		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("GBE568", 0));
+	}
+	
+	@Test(expected=ParqueaderoServiceException.class)
+	public void salidaVehiculoParqueaderoPlacaVacia() throws ParqueaderoServiceException {
+		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero(""),0f);
+	}
+	
+	@Test(expected=ParqueaderoServiceException.class)
+	public void salidaVehiculoParqueaderoPlacaInvalida() throws ParqueaderoServiceException {
+		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero("Az01"),0f);
+	}
+	
+	@Test(expected=ParqueaderoServiceException.class)
+	public void salidaVehiculoParqueaderoNoExistente() throws ParqueaderoServiceException {
+		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero("HJK825"),0f);
+	}
 
 }
