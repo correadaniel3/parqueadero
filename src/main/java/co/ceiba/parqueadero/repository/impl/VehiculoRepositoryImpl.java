@@ -13,6 +13,7 @@ import co.ceiba.parqueadero.modelo.Carro;
 import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
+import co.ceiba.parqueadero.utils.Mensajes;
 
 @Transactional
 @Repository
@@ -28,7 +29,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			String hql = "FROM Vehiculo";
 			return (List<Vehiculo>) entityManager.createQuery(hql).getResultList();
 		}catch(Exception e) {
-			throw new VehiculoException("Error al obtener todos los vehiculos de la BD", e);
+			throw new VehiculoException(Mensajes.ERROR_TODOS_LOS_VEHICULOS, e);
 		}
 	}
 
@@ -44,7 +45,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			entityManager.persist(vehiculo);
 			return vehiculo;
 		}catch(Exception e) {
-			throw new VehiculoException("No fue posible agregar el vehiculo en la base de datos",e);
+			throw new VehiculoException(Mensajes.ERROR_INSERTAR,e);
 		}
 	}
 
@@ -57,7 +58,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			entityManager.remove(vehiculo);
 			return true;
 		}catch(Exception e) {
-			throw new VehiculoException("No fue posible eliminar el vehiculo de la base de datos",e);
+			throw new VehiculoException(Mensajes.ERROR_ELIMINAR,e);
 		}
 	}
 
@@ -74,7 +75,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			}
 			return null;
 		}catch(Exception e) {
-			throw new VehiculoException("No fue posible Obtener el vehiculo de la base de datos",e);
+			throw new VehiculoException(Mensajes.ERROR_OBTENER_VEHICULO,e);
 		}
 	}
 	
@@ -84,7 +85,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			String hql = "FROM Moto moto WHERE moto.placa = ?";
 			return (Moto) entityManager.createQuery(hql).setParameter(1, placa).getResultList().get(0);
 		}catch(Exception e) {
-			throw new VehiculoException("Error al obtener todas las motos de la BD", e);
+			throw new VehiculoException(Mensajes.ERROR_OBTENER_MOTO, e);
 		}
 	}
 }

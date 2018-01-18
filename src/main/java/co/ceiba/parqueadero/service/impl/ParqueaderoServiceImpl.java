@@ -14,6 +14,7 @@ import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.service.ParqueaderoService;
 import co.ceiba.parqueadero.utils.Constantes;
+import co.ceiba.parqueadero.utils.Mensajes;
 
 @Transactional
 @Service
@@ -28,35 +29,33 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	@Override
 	public boolean ingresarVehiculoParqueadero(String placa, int cilindraje) throws ParqueaderoServiceException {
 		if(placa.isEmpty()) {
-			throw new ParqueaderoServiceException("La placa del vehiculo no puede ser vacia");
+			throw new ParqueaderoServiceException(Mensajes.PLACA_VACIA);
 		}
 		if(!placa.matches(Constantes.PATRON_PLACA)) {
-			throw new ParqueaderoServiceException("No se ha ingresado una placa valida");
+			throw new ParqueaderoServiceException(Mensajes.PLACA_INVALIDA);
 		}
 		if(cilindraje <0) {
-			throw new ParqueaderoServiceException("El cilindraje no puede ser menor a cero");
+			throw new ParqueaderoServiceException(Mensajes.CILINDRAJE_INVALIDO);
 		}
 		try {
 			return parqueaderoLogica.ingresarVehiculo(placa, cilindraje);
 		} catch (ParqueaderoLogicaException e) {
-			throw new ParqueaderoServiceException("No fue posible registrar la"
-					+ " entrada del vehiculo",e);
+			throw new ParqueaderoServiceException(Mensajes.ERROR_REGISTRO,e);
 		}
 	}
 
 	@Override
 	public double salidaVehiculoParqueadero(String placa) throws ParqueaderoServiceException {
 		if(placa.isEmpty()) {
-			throw new ParqueaderoServiceException("La placa del vehiculo no puede ser vacia");
+			throw new ParqueaderoServiceException(Mensajes.PLACA_VACIA);
 		}
 		if(!placa.matches(Constantes.PATRON_PLACA)) {
-			throw new ParqueaderoServiceException("No se ha ingresado una placa valida");
+			throw new ParqueaderoServiceException(Mensajes.PLACA_INVALIDA);
 		}
 		try {
 			return parqueaderoLogica.salidaParqueadero(placa);
 		} catch (ParqueaderoLogicaException e) {
-			throw new ParqueaderoServiceException("No fue posible registrar la"
-					+ " salida del vehiculo",e);
+			throw new ParqueaderoServiceException(Mensajes.ERROR_SALIDA_VEHICULO,e);
 		}
 	}
 

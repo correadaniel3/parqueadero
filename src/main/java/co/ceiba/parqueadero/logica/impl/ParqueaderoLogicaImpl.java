@@ -17,6 +17,7 @@ import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Constantes;
+import co.ceiba.parqueadero.utils.Mensajes;
 
 @Transactional
 @Service
@@ -70,8 +71,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 			Parqueadero parq=parqueaderoRepository.actualizar(placa, salida);
 			return calcularMonto(parq);
 		}catch(Exception e) {
-			throw new ParqueaderoLogicaException("no fue posible registrar la salida del vehiculo"
-					+ "del parqueadero",e);
+			throw new ParqueaderoLogicaException(Mensajes.ERROR_SALIDA_VEHICULO,e);
 		}
 	}
 
@@ -87,8 +87,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 			parqueaderoRepository.insertar(vehiculo, fecha);
 			return true;
 		}catch(Exception e) {
-			throw new ParqueaderoLogicaException("No fue posible agregar el registro al parqueadero"
-					+ " en la base de datos",e);
+			throw new ParqueaderoLogicaException(Mensajes.ERROR_INSERTAR,e);
 		}
 	}
 	public void validaciones(String placa, int cilindraje, Calendar fecha) throws Exception {
@@ -99,15 +98,14 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	public void validarExistencia(String placa) throws ParqueaderoException {
 		Parqueadero parq=parqueaderoRepository.obtenerPorVehiculoSinSalir(placa);
 		if(parq!=null) {
-			throw new ParqueaderoException("El vehiculo ya se encuentra en el parqueadero ");
+			throw new ParqueaderoException(Mensajes.ERROR_DUPLICADO);
 		}
 	}
 	
 	public void validarRestricciones(String placa, Calendar fecha) throws ParqueaderoException {
 		if(placa.substring(0, 1).equalsIgnoreCase(Constantes.LETRA_PLACA) && 
 				(Constantes.getDiasRestringidos().contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
-			throw new ParqueaderoException("Esta placa no puede ser utilizada los dias"
-					+ "lunes y domingo");
+			throw new ParqueaderoException(Mensajes.RESTRICCION_PLACA);
 		}
 	}
 	
@@ -115,10 +113,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		int cantidadCarros=parqueaderoRepository.obtenerCarros().size();
 		int cantidadMotos=parqueaderoRepository.obtenerMotos().size();
 		if(cantidadCarros>Constantes.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
-			throw new ParqueaderoException("El parqueadero no puede recibir mas carros");
+			throw new ParqueaderoException(Mensajes.CAPACIDAD_CARROS);
 		}
 		if(cantidadMotos>Constantes.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
-			throw new ParqueaderoException("El parqueadero no puede recibir mas motos");
+			throw new ParqueaderoException(Mensajes.CAPACIDAD_MOTOS);
 		}
 	}
 
