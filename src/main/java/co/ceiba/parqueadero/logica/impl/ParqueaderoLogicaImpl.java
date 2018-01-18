@@ -28,6 +28,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	@Autowired
 	VehiculoRepository vehiculoRepository;
 	
+	//REALIZAR REFACTOR DE ESTE METODO
 	@Override
 	public double calcularMonto(Parqueadero parqueadero) {
 		long horas=cantidadHoras(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
@@ -46,7 +47,6 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return monto;
 	}
 	
-	//Por hacer test
 	private double calcularMontoCarro(long dias, long horasDia) {
 		double monto=0;
 		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
@@ -58,7 +58,6 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return monto;
 	}
 	
-	//Por hacer test
 	private double calcularMontoMoto(long dias, long horasDia, Moto moto) {
 		double monto=0;
 		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {

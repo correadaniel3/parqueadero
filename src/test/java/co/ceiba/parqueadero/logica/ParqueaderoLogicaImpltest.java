@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
 import co.ceiba.parqueadero.logica.ParqueaderoLogica;
 import co.ceiba.parqueadero.modelo.Moto;
@@ -123,9 +122,5 @@ public class ParqueaderoLogicaImpltest {
 	}
 
 	
-	@Test
-	public void test5Borrado() throws ParqueaderoException {
-		parqueaderoRepository.eliminar("XYZ105");
-	}
 
 }

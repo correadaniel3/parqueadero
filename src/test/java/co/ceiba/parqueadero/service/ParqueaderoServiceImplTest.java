@@ -34,10 +34,6 @@ public class ParqueaderoServiceImplTest {
 		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero("UVW987"),0f);
 	}
 	
-	@Test
-	public void test3Borrado() throws ParqueaderoException {
-		parqueaderoRepository.eliminar("UVW987");
-	}
 	
 	@Test(expected=ParqueaderoServiceException.class)
 	public void ingresarVehiculoPlacaVacia() throws ParqueaderoServiceException {

@@ -9,9 +9,7 @@ import co.ceiba.parqueadero.modelo.Vehiculo;
 
 public interface ParqueaderoRepository {
 	boolean insertar(Vehiculo vehiculo, Calendar fechaIngreso) throws ParqueaderoException;
-	boolean eliminar(String placa) throws ParqueaderoException;
 	Parqueadero actualizar(String placa, Calendar fechaSalida) throws ParqueaderoException;
 	Parqueadero obtenerPorVehiculoSinSalir(String placa) throws ParqueaderoException;
-	Parqueadero obtenerPorVehiculo(String placa) throws ParqueaderoException;
 	List<Parqueadero> obtenerVehiculos() throws ParqueaderoException;
 }

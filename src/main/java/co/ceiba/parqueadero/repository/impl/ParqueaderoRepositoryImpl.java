@@ -38,18 +38,6 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 
-	@Override
-	public boolean eliminar(String placa) throws ParqueaderoException {
-		try{
-			Parqueadero parq = obtenerPorVehiculo(placa);
-			entityManager.remove(parq);
-			return true;
-		}catch(Exception e) {
-			throw new ParqueaderoException("No fue posible eliminar el vehiculo del registro del"
-					+ " parqueadero en la base de datos",e);
-		}
-	}
-
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -79,27 +67,6 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}catch (Exception e) {
 			throw new ParqueaderoException("No fue posible obtener el registro de los"
 					+ " vehiculos en el parqueadero de la base de datos",e);
-		}
-	}
-
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Parqueadero obtenerPorVehiculo(String placa) throws ParqueaderoException {
-		try {
-			List<Parqueadero> parq = null;
-			String hql = "FROM Parqueadero";
-			parq = (List<Parqueadero>) entityManager.createQuery(hql).getResultList();
-			
-			for(Parqueadero parqueadero:parq) {
-				if(parqueadero.getVehiculo().getPlaca().equals(placa)) {
-					
-					return parqueadero;
-				}
-			}
-			return null;
-		}catch (Exception e) {
-			throw new ParqueaderoException("No fue posible obtener el vehiculo",e);
 		}
 	}
 

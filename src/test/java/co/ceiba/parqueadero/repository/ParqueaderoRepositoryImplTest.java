@@ -1,14 +1,14 @@
 package co.ceiba.parqueadero.repository;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
@@ -19,72 +19,72 @@ import co.ceiba.parqueadero.modelo.Vehiculo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ParqueaderoRepositoryImplTest {
-
-	@Autowired
-	ParqueaderoRepository parqueaderoRepository;
 	
-	Vehiculo veh;
-	Parqueadero parq;
-	Calendar entrada;
-	Calendar salida;
-	
-	@Before
-	public void inicializacion() {
-		veh=new Vehiculo("ACB105");
-		veh.setTipo("2");
-		parq=new Parqueadero(veh,Calendar.getInstance());
-		entrada=Calendar.getInstance();
-		salida=Calendar.getInstance();
-	}
+	@Mock
+	private ParqueaderoRepository parqueaderoRepo;
 	
 	@Test
-	public void test1Insertar() {
-		try {
-			Assert.assertTrue(parqueaderoRepository.insertar(veh, entrada));
-		} catch (ParqueaderoException e) {
-			e.printStackTrace();
-		}
+	public void testInsertar() throws ParqueaderoException {
+		Vehiculo veh=new Vehiculo("ABS123");
+		Calendar entrada=Calendar.getInstance();
+		boolean resultado=true;
+		
+		Mockito.when(parqueaderoRepo.insertar(veh, entrada)).thenReturn(resultado);
+		
+		Assert.assertEquals(resultado, parqueaderoRepo.insertar(veh,entrada));
 	}
 	
 	@Test(expected=TransactionSystemException.class)
-	public void test11InsertarFallido() {
-		try {
-			Assert.assertTrue(parqueaderoRepository.insertar(new Vehiculo(""), entrada));
-		} catch (ParqueaderoException e) {
-			e.printStackTrace();
-		}
+	public void testInsertarFallido() throws ParqueaderoException {
+		Vehiculo veh=new Vehiculo("");
+		Calendar entrada=Calendar.getInstance();
+		boolean resultado=true;
+		
+		Mockito.when(parqueaderoRepo.insertar(veh, entrada)).thenThrow(new TransactionSystemException(""));
+
+		Assert.assertEquals(resultado, parqueaderoRepo.insertar(veh,entrada));
 	}
 	
 	@Test
-	public void test2ObtenerPorVehiculoSinSalir() throws Exception{
-		Assert.assertNotNull(parqueaderoRepository.obtenerPorVehiculoSinSalir("ACB105"));
-	}
+	public void testObtenerPorVehiculoSinSalir() throws Exception{
+		Vehiculo veh=new Vehiculo("ACB105");
+		Calendar entrada=Calendar.getInstance();
+		Parqueadero resultado=new Parqueadero(veh, entrada);
+
+		
+		Mockito.when(parqueaderoRepo.obtenerPorVehiculoSinSalir(veh.getPlaca())).thenReturn(resultado);
+		
+		Assert.assertEquals(resultado, parqueaderoRepo.obtenerPorVehiculoSinSalir("ACB105"));
+	}	
 	
 	@Test
-	public void test3ObtenerPorVehiculo() throws Exception{
-		Assert.assertNotNull(parqueaderoRepository.obtenerPorVehiculo("ACB105"));
-	}
-	
-	@Test
-	public void test4Actualizar() {
-		try {
-			Assert.assertNotNull(parqueaderoRepository.actualizar("ACB105",salida));
-		} catch (ParqueaderoException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	@Test
-	public void test6Eliminar() throws Exception {
-		Assert.assertTrue(parqueaderoRepository.eliminar("ACB105"));
+	public void test4Actualizar() throws ParqueaderoException {
+		Vehiculo veh=new Vehiculo("ACB105");
+		Calendar entrada=Calendar.getInstance();
+		Calendar salida=Calendar.getInstance();
+		Parqueadero inicial=new Parqueadero(veh, entrada);
+		Parqueadero resultado=inicial;
+		resultado.setFechaSalida(salida);
+		
+		Mockito.when(parqueaderoRepo.actualizar(veh.getPlaca(), salida)).thenReturn(resultado);
+		
+		Assert.assertEquals(resultado, parqueaderoRepo.actualizar("ACB105",salida));
 	}
 	
 	@Test
 	public void testObtenerVehiculos() throws ParqueaderoException {
-		Assert.assertNotNull(parqueaderoRepository.obtenerVehiculos());
+		List<Parqueadero> resultado=new ArrayList<Parqueadero>();
+		Calendar entrada=Calendar.getInstance();
+		Vehiculo veh1=new Vehiculo("ABX123");
+		Vehiculo veh2=new Vehiculo("VBN567");
+		Parqueadero parq1=new Parqueadero(veh1,entrada);
+		Parqueadero parq2=new Parqueadero(veh2,entrada);
+		resultado.add(parq1); resultado.add(parq2);
+		
+		Mockito.when(parqueaderoRepo.obtenerVehiculos()).thenReturn(resultado);
+		
+		Assert.assertEquals(resultado,parqueaderoRepo.obtenerVehiculos());
 	}
 	
 	
