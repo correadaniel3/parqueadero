@@ -28,7 +28,6 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	@Autowired
 	VehiculoRepository vehiculoRepository;
 	
-	//REALIZAR REFACTOR DE ESTE METODO
 	@Override
 	public double calcularMonto(Parqueadero parqueadero) {
 		long horas=cantidadHoras(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
@@ -38,37 +37,29 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		long horasDia= horas%24;
 		double monto=0;
 		if(minutosHora>0) {horasDia++;}
-		if(parqueadero.getVehiculo().getTipo().equals("2")) {
-			monto=calcularMontoCarro(dias,horasDia);
-		}else if(parqueadero.getVehiculo().getTipo().equals("1")) {
-			Moto moto= (Moto)parqueadero.getVehiculo();
-			monto=calcularMontoMoto(dias, horasDia, moto);
-		}
+		monto=calcularMontoVehiculo(dias, horasDia, parqueadero.getVehiculo());
 		return monto;
 	}
 	
-	private double calcularMontoCarro(long dias, long horasDia) {
+	private double calcularMontoVehiculo(long dias, long horasDia, Vehiculo veh) {
 		double monto=0;
 		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
-			monto=(dias+1)*Constantes.DIA_CARRO;
-		}else{
-			monto=dias*Constantes.DIA_CARRO + horasDia*Constantes.HORA_CARRO;
-		}
-		if(monto==0) {monto=Constantes.HORA_CARRO;}
-		return monto;
-	}
-	
-	private double calcularMontoMoto(long dias, long horasDia, Moto moto) {
-		double monto=0;
-		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
-			monto=(dias+1)*Constantes.DIA_MOTO;
+			if(veh.getTipo().equals("2")) {monto=(dias+1)*Constantes.DIA_CARRO;}
+			else {monto=(dias+1)*Constantes.DIA_MOTO;}
 		}else {
-			monto=dias*Constantes.DIA_MOTO + horasDia*Constantes.HORA_MOTO;
+			if(veh.getTipo().equals("2")) {monto=dias*Constantes.DIA_CARRO + horasDia*Constantes.HORA_CARRO;}
+			else {monto=dias*Constantes.DIA_MOTO + horasDia*Constantes.HORA_MOTO;}
 		}
-		if(moto.getCilindraje()>=Constantes.CILINDRAJE) {
-			monto+=2000;
+		if(veh.getTipo().equals("1")) {
+			Moto moto= (Moto)veh;
+			if(moto.getCilindraje()>=Constantes.CILINDRAJE) {
+				monto+=2000;
+			}
 		}
-		if(monto==0) {monto=Constantes.HORA_MOTO;}
+		if(monto==0) {
+			if(veh.getTipo().equals("2")) {monto=Constantes.HORA_CARRO;}
+			else {monto=Constantes.HORA_MOTO;}
+		}
 		return monto;
 	}
 

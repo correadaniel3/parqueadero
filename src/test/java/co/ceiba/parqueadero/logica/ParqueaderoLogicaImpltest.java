@@ -5,10 +5,10 @@ import java.util.Calendar;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,107 +18,105 @@ import co.ceiba.parqueadero.logica.ParqueaderoLogica;
 import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.modelo.Vehiculo;
-import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ParqueaderoLogicaImpltest {
 
-	@Autowired
+	@Mock
 	ParqueaderoLogica parqueaderoLogica;
 	
 	@Autowired
-	ParqueaderoRepository parqueaderoRepository;
+	ParqueaderoLogica parqLogica;
 	
-	Vehiculo veh, moto, moto2;
-	Parqueadero parq, parqMoto, parqMoto2;
-	Calendar entrada;
 	Calendar salida;
+	Calendar entrada;
+	Parqueadero parq, parq2;
+	Vehiculo veh, veh2;
 	
 	@Before
 	public void inicializacion() {
-		veh=new Vehiculo("XYZ105");
-		moto=new Moto("FOD223",200);
-		moto2=new Moto("FOD223",550);
-		moto.setTipo("1");
-		moto2.setTipo("1");
-		veh.setTipo("2");
-		parq=new Parqueadero(veh,Calendar.getInstance());
-		parqMoto=new Parqueadero(moto,Calendar.getInstance());
-		parqMoto2=new Parqueadero(moto2,Calendar.getInstance());
-		
 		entrada=Calendar.getInstance();
 		salida=Calendar.getInstance();
-	}
+		veh=new Vehiculo("XYZ105");
+		veh.setTipo("2");
+		parq=new Parqueadero(veh,entrada);
+		veh2=new Moto("XYZ105",250);
+		veh2.setTipo("1");
+		parq2=new Parqueadero(veh2,entrada);	
+		
+}
 	
 	@Test
-	public void test1IngresarVehiculo() {
-		try {
-			Assert.assertTrue(parqueaderoLogica.ingresarVehiculo("XYZ105", 0));
-		} catch (ParqueaderoLogicaException e) {
-			e.printStackTrace();
-		}
+	public void testIngresarVehiculo() throws ParqueaderoLogicaException {
+		boolean resultado= true;
+		
+		Mockito.when(parqueaderoLogica.ingresarVehiculo("ACB123", 0)).thenReturn(resultado);
+		
+		Assert.assertEquals(resultado, parqueaderoLogica.ingresarVehiculo("ACB123", 0));
 	}
 	
 	
 	@Test
-	public void test2CantidadHoras() {
+	public void testCantidadHoras() {
 		salida.add(Calendar.HOUR_OF_DAY, 11);
-		Assert.assertEquals(11,parqueaderoLogica.cantidadHoras(entrada, salida));
+		Assert.assertEquals(11,parqLogica.cantidadHoras(entrada, salida));
 	}
 	@Test
-	public void test21CantidadMinutos() {
+	public void testCantidadMinutos() {
 		salida.add(Calendar.MINUTE, 2);
-		Assert.assertEquals(2,parqueaderoLogica.cantidadMinutos(entrada, salida));
+		Assert.assertEquals(2,parqLogica.cantidadMinutos(entrada, salida));
 	}
 	
 	@Test
-	public void test3CalcularMonto(){
+	public void testCalcularMontoMasDeUnDia(){
 		salida.add(Calendar.DATE,1);
 		salida.add(Calendar.HOUR_OF_DAY,3);
 		parq.setFechaSalida(salida);
-		double monto=parqueaderoLogica.calcularMonto(parq);
+		double monto=parqLogica.calcularMonto(parq);
 		Assert.assertEquals(11000,monto,0f);
 	}
 	
 	@Test
-	public void test31CalcularMonto(){
+	public void testCalcularMontoMenosDeUnDia(){
 		salida.add(Calendar.HOUR,11);
 		parq.setFechaSalida(salida);
-		double monto=parqueaderoLogica.calcularMonto(parq);
+		double monto=parqLogica.calcularMonto(parq);
 		Assert.assertEquals(8000,monto,0f);
 	}
 	
 	@Test
-	public void test32CalcularMonto(){
+	public void testCalcularMontoMenosDeNueveHoras(){
 		salida.add(Calendar.HOUR_OF_DAY,5);
 		parq.setFechaSalida(salida);
-		double monto=parqueaderoLogica.calcularMonto(parq);
+		double monto=parqLogica.calcularMonto(parq);
 		Assert.assertEquals(5000,monto,0f);
 	}
 	@Test
-	public void test33CalcularMonto(){
+	public void testCalcularMontoMoto(){
 		salida.add(Calendar.HOUR_OF_DAY,5);
-		parqMoto.setFechaSalida(salida);
-		double monto=parqueaderoLogica.calcularMonto(parqMoto);
+		parq2.setFechaSalida(salida);
+		double monto=parqLogica.calcularMonto(parq2);
 		Assert.assertEquals(2500,monto,0f);
 	}
 	@Test
-	public void test34CalcularMonto(){
+	public void testCalcularMontoMotoCilindrajeMayor(){
 		salida.add(Calendar.HOUR_OF_DAY,5);
-		parqMoto2.setFechaSalida(salida);
-		double monto=parqueaderoLogica.calcularMonto(parqMoto2);
+		veh2=new Moto("XYZ105",600);
+		veh2.setTipo("1");
+		parq2=new Parqueadero(veh2,entrada);	
+		parq2.setFechaSalida(salida);
+		double monto=parqLogica.calcularMonto(parq2);
 		Assert.assertEquals(4500,monto,0f);
 	}
 
 	@Test
-	public void test4SalidaParqueadero() {
-		try {
-			Assert.assertEquals(1000,parqueaderoLogica.salidaParqueadero("XYZ105"),0f);
-		} catch (ParqueaderoLogicaException e) {
-			e.printStackTrace();
-		}
+	public void test4SalidaParqueadero() throws ParqueaderoLogicaException {
+		Double resultado=1000.0;
+		
+		Mockito.when(parqueaderoLogica.salidaParqueadero("XYZ105")).thenReturn(1000.0);
+		
+		Assert.assertEquals(resultado,parqueaderoLogica.salidaParqueadero("XYZ105"),0f);
 	}
 
 	

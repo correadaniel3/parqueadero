@@ -5,6 +5,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -15,23 +17,31 @@ import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ParqueaderoServiceImplTest {
 
 	@Autowired
 	ParqueaderoService parqueaderoService;
 	
-	@Autowired
-	ParqueaderoRepository parqueaderoRepository;
+	@Mock
+	private ParqueaderoService parqService;
+	
 	
 	@Test
-	public void test1IngresarVehiculoParqueadero() throws ParqueaderoServiceException, ParqueaderoException {
-		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("UVW987", 0));
+	public void testIngresarVehiculoParqueadero() throws ParqueaderoServiceException {
+		boolean resultado=true;
+		
+		Mockito.when(parqService.ingresarVehiculoParqueadero("UVW987", 0)).thenReturn(resultado);
+		
+		Assert.assertTrue(parqService.ingresarVehiculoParqueadero("UVW987", 0));
 	}
 
 	@Test
-	public void test2SalidaVehiculoParqueadero() throws ParqueaderoServiceException, ParqueaderoException {
-		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero("UVW987"),0f);
+	public void testSalidaVehiculoParqueadero() throws ParqueaderoServiceException {
+		double resultado=1000.0;
+		
+		Mockito.when(parqService.salidaVehiculoParqueadero("UVW987")).thenReturn(resultado);
+		
+		Assert.assertEquals(1000,parqService.salidaVehiculoParqueadero("UVW987"),0f);
 	}
 	
 	
@@ -51,7 +61,10 @@ public class ParqueaderoServiceImplTest {
 	}
 	@Test(expected=ParqueaderoServiceException.class)
 	public void ingresarVehiculoExistente() throws ParqueaderoServiceException {
-		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("GBE568", 0));
+		
+		Mockito.when(parqService.ingresarVehiculoParqueadero("GBE568",0)).thenThrow(new ParqueaderoServiceException());
+		
+		Assert.assertTrue(parqService.ingresarVehiculoParqueadero("GBE568", 0));
 	}
 	
 	@Test(expected=ParqueaderoServiceException.class)
@@ -66,7 +79,10 @@ public class ParqueaderoServiceImplTest {
 	
 	@Test(expected=ParqueaderoServiceException.class)
 	public void salidaVehiculoParqueaderoNoExistente() throws ParqueaderoServiceException {
-		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero("HJK825"),0f);
+		
+		Mockito.when(parqService.salidaVehiculoParqueadero("GBE568")).thenThrow(new ParqueaderoServiceException());
+
+		Assert.assertEquals(1000,parqService.salidaVehiculoParqueadero("GBE568"),0f);
 	}
 
 }
