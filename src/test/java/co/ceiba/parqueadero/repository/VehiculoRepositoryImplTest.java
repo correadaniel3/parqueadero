@@ -12,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.parqueadero.exception.VehiculoException;
-import co.ceiba.parqueadero.modelo.Carro;
-import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 
 @RunWith(SpringRunner.class)
@@ -74,33 +72,6 @@ public class VehiculoRepositoryImplTest {
 		Mockito.when(vehiculoRepo.eliminar("SUV123")).thenReturn(resultado);
 		
 		Assert.assertTrue(vehiculoRepo.eliminar("SUV123"));
-	}
-	
-	
-	@Test
-	public void testObtenerCarros()throws Exception{
-		List<Carro> resultado= new ArrayList<Carro>();
-		Carro carro1, carro2;
-		carro1=new Carro("ABC123");
-		carro2=new Carro("XYZ987");
-		resultado.add(carro1); resultado.add(carro2);
-		
-		Mockito.when(vehiculoRepo.obtenerCarros()).thenReturn(resultado);
-
-		Assert.assertEquals(resultado, vehiculoRepo.obtenerCarros());
-	}
-	
-	@Test
-	public void testObtenerMotos()throws Exception{
-		List<Moto> resultado= new ArrayList<Moto>();
-		Moto moto1, moto2;
-		moto1=new Moto("ABC123",250);
-		moto2=new Moto("XYZ987",300);
-		resultado.add(moto1); resultado.add(moto2);
-		
-		Mockito.when(vehiculoRepo.obtenerMotos()).thenReturn(resultado);
-
-		Assert.assertEquals(resultado, vehiculoRepo.obtenerMotos());
 	}
 	
 

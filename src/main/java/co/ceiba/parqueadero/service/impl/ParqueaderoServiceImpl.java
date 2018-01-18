@@ -36,9 +36,6 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		if(cilindraje <0) {
 			throw new ParqueaderoServiceException("El cilindraje no puede ser menor a cero");
 		}
-		if(Integer.valueOf(cilindraje)==null) {
-			throw new ParqueaderoServiceException("El cilindraje no puede ser nulo");
-		}
 		try {
 			return parqueaderoLogica.ingresarVehiculo(placa, cilindraje);
 		} catch (ParqueaderoLogicaException e) {

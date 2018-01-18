@@ -29,7 +29,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	VehiculoRepository vehiculoRepository;
 	
 	@Override
-	public double calcularMonto(Parqueadero parqueadero) {
+	public double calcularMonto(Parqueadero parqueadero) throws VehiculoException {
 		long horas=cantidadHoras(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
 		long minutos=cantidadMinutos(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
 		long minutosHora=minutos%60;
@@ -41,24 +41,22 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return monto;
 	}
 	
-	private double calcularMontoVehiculo(long dias, long horasDia, Vehiculo veh) {
+	private double calcularMontoVehiculo(long dias, long horasDia, Vehiculo veh) throws VehiculoException {
 		double monto=0;
+		if(veh.getTipo().equals("2")) {monto+=Constantes.HORA_CARRO;}
+		else {monto+=Constantes.HORA_MOTO;}
 		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
-			if(veh.getTipo().equals("2")) {monto=(dias+1)*Constantes.DIA_CARRO;}
-			else {monto=(dias+1)*Constantes.DIA_MOTO;}
+			if(veh.getTipo().equals("2")) {monto+=(dias+1)*Constantes.DIA_CARRO;}
+			else {monto+=(dias+1)*Constantes.DIA_MOTO;}
 		}else {
-			if(veh.getTipo().equals("2")) {monto=dias*Constantes.DIA_CARRO + horasDia*Constantes.HORA_CARRO;}
-			else {monto=dias*Constantes.DIA_MOTO + horasDia*Constantes.HORA_MOTO;}
+			if(veh.getTipo().equals("2")) {monto+=dias*Constantes.DIA_CARRO + horasDia*Constantes.HORA_CARRO;}
+			else {monto+=dias*Constantes.DIA_MOTO + horasDia*Constantes.HORA_MOTO;}
 		}
 		if(veh.getTipo().equals("1")) {
-			Moto moto= (Moto)veh;
+			Moto moto= vehiculoRepository.obtenerMotoPorPlaca(veh.getPlaca());
 			if(moto.getCilindraje()>=Constantes.CILINDRAJE) {
 				monto+=2000;
 			}
-		}
-		if(monto==0) {
-			if(veh.getTipo().equals("2")) {monto=Constantes.HORA_CARRO;}
-			else {monto=Constantes.HORA_MOTO;}
 		}
 		return monto;
 	}
@@ -111,14 +109,14 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 	
-	public void validarCantidad(int cilindraje) throws VehiculoException {
-		int cantidadCarros=vehiculoRepository.obtenerCarros().size();
-		int cantidadMotos=vehiculoRepository.obtenerMotos().size();
+	public void validarCantidad(int cilindraje) throws ParqueaderoException {
+		int cantidadCarros=parqueaderoRepository.obtenerCarros().size();
+		int cantidadMotos=parqueaderoRepository.obtenerMotos().size();
 		if(cantidadCarros>Constantes.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
-			throw new VehiculoException("El parqueadero no puede recibir mas carros");
+			throw new ParqueaderoException("El parqueadero no puede recibir mas carros");
 		}
 		if(cantidadMotos>Constantes.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
-			throw new VehiculoException("El parqueadero no puede recibir mas motos");
+			throw new ParqueaderoException("El parqueadero no puede recibir mas motos");
 		}
 	}
 

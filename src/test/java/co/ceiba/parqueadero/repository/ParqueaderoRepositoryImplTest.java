@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
 
 import co.ceiba.parqueadero.exception.ParqueaderoException;
+import co.ceiba.parqueadero.modelo.Carro;
+import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 
@@ -85,6 +87,34 @@ public class ParqueaderoRepositoryImplTest {
 		Mockito.when(parqueaderoRepo.obtenerVehiculos()).thenReturn(resultado);
 		
 		Assert.assertEquals(resultado,parqueaderoRepo.obtenerVehiculos());
+	}
+	
+	@Test
+	public void testObtenerCarros()throws Exception{
+		List<Parqueadero> resultado= new ArrayList<Parqueadero>();
+		Calendar entrada=Calendar.getInstance();
+		Parqueadero parq1, parq2;
+		parq1=new Parqueadero(new Carro("ABC123"),entrada);
+		parq2=new  Parqueadero(new Carro("XYZ987"),entrada);
+		resultado.add(parq1); resultado.add(parq2);
+		
+		Mockito.when(parqueaderoRepo.obtenerCarros()).thenReturn(resultado);
+
+		Assert.assertEquals(resultado, parqueaderoRepo.obtenerCarros());
+	}
+	
+	@Test
+	public void testObtenerMotos()throws Exception{
+		List<Parqueadero> resultado= new ArrayList<Parqueadero>();
+		Calendar entrada=Calendar.getInstance();
+		Parqueadero parq1, parq2;
+		parq1=new Parqueadero(new Moto("ABC123",200),entrada);
+		parq2=new  Parqueadero(new Moto("XYZ987",250),entrada);
+		resultado.add(parq1); resultado.add(parq2);
+		
+		Mockito.when(parqueaderoRepo.obtenerMotos()).thenReturn(resultado);
+
+		Assert.assertEquals(resultado, parqueaderoRepo.obtenerMotos());
 	}
 	
 	

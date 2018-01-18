@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
+import co.ceiba.parqueadero.exception.VehiculoException;
 import co.ceiba.parqueadero.logica.ParqueaderoLogica;
 import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
@@ -69,7 +70,7 @@ public class ParqueaderoLogicaImpltest {
 	}
 	
 	@Test
-	public void testCalcularMontoMasDeUnDia(){
+	public void testCalcularMontoMasDeUnDia() throws VehiculoException{
 		salida.add(Calendar.DATE,1);
 		salida.add(Calendar.HOUR_OF_DAY,3);
 		parq.setFechaSalida(salida);
@@ -78,7 +79,7 @@ public class ParqueaderoLogicaImpltest {
 	}
 	
 	@Test
-	public void testCalcularMontoMenosDeUnDia(){
+	public void testCalcularMontoMenosDeUnDia() throws VehiculoException{
 		salida.add(Calendar.HOUR,11);
 		parq.setFechaSalida(salida);
 		double monto=parqLogica.calcularMonto(parq);
@@ -86,21 +87,21 @@ public class ParqueaderoLogicaImpltest {
 	}
 	
 	@Test
-	public void testCalcularMontoMenosDeNueveHoras(){
+	public void testCalcularMontoMenosDeNueveHoras() throws VehiculoException{
 		salida.add(Calendar.HOUR_OF_DAY,5);
 		parq.setFechaSalida(salida);
 		double monto=parqLogica.calcularMonto(parq);
 		Assert.assertEquals(5000,monto,0f);
 	}
 	@Test
-	public void testCalcularMontoMoto(){
+	public void testCalcularMontoMoto() throws VehiculoException{
 		salida.add(Calendar.HOUR_OF_DAY,5);
 		parq2.setFechaSalida(salida);
 		double monto=parqLogica.calcularMonto(parq2);
 		Assert.assertEquals(2500,monto,0f);
 	}
 	@Test
-	public void testCalcularMontoMotoCilindrajeMayor(){
+	public void testCalcularMontoMotoCilindrajeMayor() throws VehiculoException{
 		salida.add(Calendar.HOUR_OF_DAY,5);
 		veh2=new Moto("XYZ105",600);
 		veh2.setTipo("1");

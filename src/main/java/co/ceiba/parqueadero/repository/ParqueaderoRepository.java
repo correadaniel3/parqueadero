@@ -12,4 +12,6 @@ public interface ParqueaderoRepository {
 	Parqueadero actualizar(String placa, Calendar fechaSalida) throws ParqueaderoException;
 	Parqueadero obtenerPorVehiculoSinSalir(String placa) throws ParqueaderoException;
 	List<Parqueadero> obtenerVehiculos() throws ParqueaderoException;
+	List<Parqueadero> obtenerCarros() throws ParqueaderoException;
+	List<Parqueadero> obtenerMotos() throws ParqueaderoException;
 }

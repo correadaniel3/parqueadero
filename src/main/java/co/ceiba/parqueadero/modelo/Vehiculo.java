@@ -46,6 +46,5 @@ public class Vehiculo implements Serializable {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-
 	
 }

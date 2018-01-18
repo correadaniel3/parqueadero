@@ -61,27 +61,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Carro> obtenerCarros() throws VehiculoException {
-		try {
-			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is null ";
-			return (List<Carro>) entityManager.createQuery(hql).getResultList();
-		}catch(Exception e) {
-			throw new VehiculoException("Error al obtener todos los carros de la BD", e);
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Moto> obtenerMotos() throws VehiculoException {
-		try {
-			String hql = "FROM Vehiculo as veh WHERE veh.cilindraje is not null ";
-			return (List<Moto>) entityManager.createQuery(hql).getResultList();
-		}catch(Exception e) {
-			throw new VehiculoException("Error al obtener todas las motos de la BD", e);
-		}
-	}
+	
 
 	@Override
 	public Vehiculo obtenerPorPlaca(String placa) throws VehiculoException {
@@ -97,6 +77,29 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			throw new VehiculoException("No fue posible Obtener el vehiculo de la base de datos",e);
 		}
 	}
-
-
+	
+	@Override
+	public Moto obtenerMotoPorPlaca(String placa) throws VehiculoException {
+		try {
+			String hql = "FROM Moto moto WHERE moto.placa = ?";
+			return (Moto) entityManager.createQuery(hql).setParameter(1, placa).getResultList().get(0);
+		}catch(Exception e) {
+			throw new VehiculoException("Error al obtener todas las motos de la BD", e);
+		}
+	}
 }
+		
+		/*
+		try{
+			List<Moto> motos=obtenerMotos();
+			for(Moto moto: motos) {
+				if(moto.getPlaca().equals(placa)) {
+					return moto;
+				}
+			}
+			return null;
+		}catch(Exception e) {
+			throw new VehiculoException("No fue posible Obtener el vehiculo de la base de datos",e);
+		}*/
+		
+

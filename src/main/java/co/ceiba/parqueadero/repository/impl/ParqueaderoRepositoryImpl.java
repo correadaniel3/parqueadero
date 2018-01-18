@@ -83,5 +83,27 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Parqueadero> obtenerCarros() throws ParqueaderoException {
+		try {
+			String hql = "SELECT parq FROM Parqueadero as parq INNER JOIN parq.vehiculo as carro WHERE parq.fechaSalida is null AND carro.tipo=2";
+			return (List<Parqueadero>) entityManager.createQuery(hql).getResultList();
+		}catch(Exception e) {
+			throw new ParqueaderoException("Error al obtener todos los carros de la BD", e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Parqueadero> obtenerMotos() throws ParqueaderoException {
+		try {
+			String hql = "SELECT parq FROM Parqueadero as parq INNER JOIN parq.vehiculo as moto WHERE parq.fechaSalida is null AND moto.tipo=1";
+			return (List<Parqueadero>) entityManager.createQuery(hql).getResultList();
+		}catch(Exception e) {
+			throw new ParqueaderoException("Error al obtener todas las motos de la BD", e);
+		}
+	}
+	
 
 }
