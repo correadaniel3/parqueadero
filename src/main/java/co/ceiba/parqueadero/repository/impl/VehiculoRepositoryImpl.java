@@ -89,17 +89,4 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 	}
 }
 		
-		/*
-		try{
-			List<Moto> motos=obtenerMotos();
-			for(Moto moto: motos) {
-				if(moto.getPlaca().equals(placa)) {
-					return moto;
-				}
-			}
-			return null;
-		}catch(Exception e) {
-			throw new VehiculoException("No fue posible Obtener el vehiculo de la base de datos",e);
-		}*/
-		
 

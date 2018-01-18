@@ -43,8 +43,6 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	
 	private double calcularMontoVehiculo(long dias, long horasDia, Vehiculo veh) throws VehiculoException {
 		double monto=0;
-		if(veh.getTipo().equals("2")) {monto+=Constantes.HORA_CARRO;}
-		else {monto+=Constantes.HORA_MOTO;}
 		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
 			if(veh.getTipo().equals("2")) {monto+=(dias+1)*Constantes.DIA_CARRO;}
 			else {monto+=(dias+1)*Constantes.DIA_MOTO;}
@@ -57,6 +55,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 			if(moto.getCilindraje()>=Constantes.CILINDRAJE) {
 				monto+=2000;
 			}
+		}
+		if(monto==0) {
+			if(veh.getTipo().equals("2")) {monto+=Constantes.HORA_CARRO;}
+			else {monto+=Constantes.HORA_MOTO;}
 		}
 		return monto;
 	}
