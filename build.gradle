@@ -61,12 +61,6 @@ jacocoTestReport{
         csv.enabled false
         html.destination file("$buildDir/reports/jacoco/jacocoHtml")
     }
-    classDirectories = fileTree(
-                dir: "${project.buildDir}/classes/main",
-                excludes: [
-                	"co/ceiba/parqueadero/repository/impl/**"
-                      //whatever here like JavaConfig etc. in /src/main/java
-                    ])
 }
 jacocoTestReport.dependsOn(test)
 
