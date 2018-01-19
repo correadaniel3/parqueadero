@@ -14,6 +14,7 @@ import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.service.ParqueaderoService;
+import co.ceiba.parqueadero.utils.Mensajes;
 
 @RestController
 public class ParqueaderoController {
@@ -25,14 +26,18 @@ public class ParqueaderoController {
 	 @RequestMapping(path="/ingresar/placa={placa}&cilindraje={cilindraje}", 
 			 method = RequestMethod.GET)
 	 public boolean ingresar(@PathVariable String placa,
-			 @PathVariable String cilindraje) throws  Exception {
-				return parqueaderoService.ingresarVehiculoParqueadero(placa, 
-						Integer.parseInt(cilindraje)); 
+			 @PathVariable String cilindraje) throws  ParqueaderoServiceException {
+				try {
+					return parqueaderoService.ingresarVehiculoParqueadero(placa, 
+							Integer.parseInt(cilindraje));
+				} catch (NumberFormatException e) {
+					throw new ParqueaderoServiceException("No se pudo convertir el numero");
+				}
 	 }
 	 
 	 @CrossOrigin
 	 @RequestMapping(path="/salir/placa={placa}", method = RequestMethod.GET)
-	 public double salir(@PathVariable String placa) throws Exception {
+	 public double salir(@PathVariable String placa) throws ParqueaderoServiceException {
 				return parqueaderoService.salidaVehiculoParqueadero(placa); 
 	 }
 	 
@@ -42,7 +47,7 @@ public class ParqueaderoController {
 			try {
 				return parqueaderoService.obtenerVehiculos();
 			} catch (ParqueaderoException e) {
-				throw new ParqueaderoServiceException("No se pudo obtener todos los vehiculos");
+				throw new ParqueaderoServiceException(Mensajes.ERROR_OBTENER_TODOS_SIN_SALIR);
 			} 
 	 }
 }
