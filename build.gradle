@@ -62,7 +62,7 @@ jacocoTestReport{
         html.destination file("$buildDir/reports/jacoco/jacocoHtml")
     }
     classDirectories = fileTree(
-                dir: "${project.buildDir}/classes/main",
+                dir: "$buildDir/classes/main",
                 excludes: [
                 	"co/ceiba/parqueadero/repository/**"
                       //whatever here like JavaConfig etc. in /src/main/java
