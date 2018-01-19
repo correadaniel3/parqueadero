@@ -64,7 +64,7 @@ jacocoTestReport{
     classDirectories = fileTree(
                 dir: "${project.buildDir}/classes/main",
                 excludes: [
-                	"co/ceiba/parqueadero/repository/impl/**"
+                	"co/ceiba/parqueadero/repository/**"
                       //whatever here like JavaConfig etc. in /src/main/java
                     ]
 }
