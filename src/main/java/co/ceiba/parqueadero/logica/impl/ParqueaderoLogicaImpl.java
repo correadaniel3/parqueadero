@@ -112,10 +112,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	public void validarCantidad(int cilindraje) throws ParqueaderoException {
 		int cantidadCarros=parqueaderoRepository.obtenerCarros().size();
 		int cantidadMotos=parqueaderoRepository.obtenerMotos().size();
-		if(cantidadCarros>Constantes.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
+		if(cantidadCarros>=Constantes.CANTIDAD_MAXIMA_CARROS && cilindraje==0) {
 			throw new ParqueaderoException(Mensajes.CAPACIDAD_CARROS);
 		}
-		if(cantidadMotos>Constantes.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
+		if(cantidadMotos>=Constantes.CANTIDAD_MAXIMA_MOTOS && cilindraje >0) {
 			throw new ParqueaderoException(Mensajes.CAPACIDAD_MOTOS);
 		}
 	}

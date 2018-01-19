@@ -46,7 +46,7 @@ public class ParqueaderoLogicaImpltest {
 		veh2.setTipo("1");
 		parq2=new Parqueadero(veh2,entrada);	
 		
-}
+	}
 	
 	@Test
 	public void testIngresarVehiculo() throws ParqueaderoLogicaException {

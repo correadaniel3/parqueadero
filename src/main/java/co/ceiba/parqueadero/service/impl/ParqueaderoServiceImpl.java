@@ -40,7 +40,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		try {
 			return parqueaderoLogica.ingresarVehiculo(placa, cilindraje);
 		} catch (ParqueaderoLogicaException e) {
-			throw new ParqueaderoServiceException(Mensajes.ERROR_REGISTRO,e);
+			throw new ParqueaderoServiceException(e.getCause().toString().split(":")[1]);
 		}
 	}
 
@@ -57,7 +57,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		} catch (ParqueaderoLogicaException e) {
 			throw new ParqueaderoServiceException(Mensajes.ERROR_SALIDA_VEHICULO,e);
 		}
-	}
+}
 
 	@Override
 	public List<Parqueadero> obtenerVehiculos() throws ParqueaderoException {
