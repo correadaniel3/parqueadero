@@ -27,7 +27,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 	public List<Vehiculo> obtenerTodos() throws VehiculoException {
 		try {
 			String hql = "FROM Vehiculo";
-			return (List<Vehiculo>) entityManager.createQuery(hql).getResultList();// $COVERAGE-IGNORE$
+			return (List<Vehiculo>) entityManager.createQuery(hql).getResultList();
 		}catch(Exception e) {
 			throw new VehiculoException(Mensajes.ERROR_TODOS_LOS_VEHICULOS, e);
 		}
@@ -38,14 +38,14 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		Vehiculo vehiculo;
 		try {
 			if(cilindraje==0) {
-				vehiculo=new Carro(placa.toUpperCase()); // $COVERAGE-IGNORE$
+				vehiculo=new Carro(placa.toUpperCase()); 
 			}else {
-				vehiculo=new Moto(placa.toUpperCase(),cilindraje); // $COVERAGE-IGNORE$
+				vehiculo=new Moto(placa.toUpperCase(),cilindraje); 
 			}
 			entityManager.persist(vehiculo);
 			return vehiculo;
 		}catch(Exception e) {
-			throw new VehiculoException(Mensajes.ERROR_INSERTAR,e); // $COVERAGE-IGNORE$
+			throw new VehiculoException(Mensajes.ERROR_INSERTAR,e); 
 		}
 	}
 
@@ -55,7 +55,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			Vehiculo vehiculo = null;
 			String hql = "FROM Vehiculo as veh WHERE veh.placa = ?";
 			vehiculo = (Vehiculo) entityManager.createQuery(hql).setParameter(1, placa).getSingleResult();
-			entityManager.remove(vehiculo); // $COVERAGE-IGNORE$
+			entityManager.remove(vehiculo); 
 			return true;
 		}catch(Exception e) {
 			throw new VehiculoException(Mensajes.ERROR_ELIMINAR,e);
@@ -70,12 +70,12 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 			List<Vehiculo> vehiculos=obtenerTodos();
 			for(Vehiculo veh: vehiculos) {
 				if(veh.getPlaca().equals(placa)) {
-					return veh;// $COVERAGE-IGNORE$
+					return veh;
 				}
 			}
 			return null;
 		}catch(Exception e) {
-			throw new VehiculoException(Mensajes.ERROR_OBTENER_VEHICULO,e);// $COVERAGE-IGNORE$
+			throw new VehiculoException(Mensajes.ERROR_OBTENER_VEHICULO,e);
 		}
 	}
 	
@@ -83,7 +83,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 	public Moto obtenerMotoPorPlaca(String placa) throws VehiculoException {
 		try {
 			String hql = "FROM Moto moto WHERE moto.placa = ?";
-			return (Moto) entityManager.createQuery(hql).setParameter(1, placa).getResultList().get(0);// $COVERAGE-IGNORE$
+			return (Moto) entityManager.createQuery(hql).setParameter(1, placa).getResultList().get(0);
 		}catch(Exception e) {
 			throw new VehiculoException(Mensajes.ERROR_OBTENER_MOTO, e);
 		}

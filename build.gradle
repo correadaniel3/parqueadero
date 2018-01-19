@@ -61,5 +61,12 @@ jacocoTestReport{
         csv.enabled false
         html.destination file("$buildDir/reports/jacoco/jacocoHtml")
     }
+    
+     afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: 'com/ceiba/parqueadero/repository/**')
+        })
+    }
 }
 jacocoTestReport.dependsOn(test)
+
