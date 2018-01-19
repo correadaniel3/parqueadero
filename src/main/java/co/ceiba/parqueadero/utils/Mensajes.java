@@ -31,4 +31,6 @@ public class Mensajes {
 	public static final String PLACA_VACIA="La placa del vehiculo no puede ser vacia";
 	public static final String PLACA_INVALIDA="No se ha ingresado una placa valida";
 	public static final String CILINDRAJE_INVALIDO="El cilindraje no puede ser menor a cero";
+	
+	private Mensajes() {}
 }
