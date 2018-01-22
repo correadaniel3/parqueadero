@@ -52,7 +52,6 @@ test {
 	jacoco {
 		append = false
 		destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
-		excludes = ['**/*Repository**']
 	}
 }
 
@@ -62,6 +61,12 @@ jacocoTestReport{
         csv.enabled false
         html.destination file("$buildDir/reports/jacoco/jacocoHtml")
     }
+     classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/*model/**'
+            ])
+        })
+	}
 }
 jacocoTestReport.dependsOn(test)
 
