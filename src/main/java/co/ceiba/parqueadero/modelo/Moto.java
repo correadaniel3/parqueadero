@@ -5,6 +5,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+import lombok.Generated;
+
 @SuppressWarnings("serial")
 @Entity
 @DiscriminatorValue("1")
@@ -19,13 +21,16 @@ public class Moto extends Vehiculo {
 		this.cilindraje=cilindraje;
 	}
 	
+	@Generated
 	public Moto() {
 	}
 	
+	@Generated
 	public int getCilindraje() {
 		return cilindraje;
 	}
 	
+	@Generated
 	public void setCilindraje(int cilindraje) {
 		this.cilindraje = cilindraje;
 	}

@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.034s</div>
+<div class="counter">0.059s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,37 +79,37 @@
 </thead>
 <tr>
 <td class="success">test4Actualizar</td>
-<td>0.004s</td>
+<td>0.008s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsertar</td>
-<td>0.006s</td>
+<td>0.008s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testInsertarFallido</td>
-<td>0.007s</td>
+<td>0.012s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testObtenerCarros</td>
-<td>0.004s</td>
+<td>0.008s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testObtenerMotos</td>
-<td>0.004s</td>
+<td>0.006s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testObtenerPorVehiculoSinSalir</td>
-<td>0.005s</td>
+<td>0.009s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testObtenerVehiculos</td>
-<td>0.004s</td>
+<td>0.008s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -117,12 +117,12 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2018-01-22 08:02:54.433  INFO 18140 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest], using SpringBootContextLoader
-2018-01-22 08:02:54.434  INFO 18140 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-2018-01-22 08:02:54.434  INFO 18140 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest]: ParqueaderoRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2018-01-22 08:02:54.447  INFO 18140 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration co.ceiba.parqueadero.ParqueaderoApplication for test class co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest
-2018-01-22 08:02:54.451  INFO 18140 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
-2018-01-22 08:02:54.455  INFO 18140 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@e159012, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@2184d1fe, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@1a277be4, org.springframework.test.context.support.DirtiesContextTestExecutionListener@41784ec0, org.springframework.test.context.transaction.TransactionalTestExecutionListener@63cfc3fd, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6443f55b, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@451a5a6c, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@46170241, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5b5ae155, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@20c82e48, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@3716d907, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@496dd0ae]
+<pre>2018-01-22 08:50:06.170  INFO 3768 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest], using SpringBootContextLoader
+2018-01-22 08:50:06.174  INFO 3768 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2018-01-22 08:50:06.176  INFO 3768 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest]: ParqueaderoRepositoryImplTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2018-01-22 08:50:06.251  INFO 3768 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration co.ceiba.parqueadero.ParqueaderoApplication for test class co.ceiba.parqueadero.repository.ParqueaderoRepositoryImplTest
+2018-01-22 08:50:06.265  INFO 3768 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener]
+2018-01-22 08:50:06.290  INFO 3768 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@eb35e25, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@11d9126a, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@38467b5e, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4ec389f8, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5a15b473, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@386a719, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@891b0bc, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@5a4f641f, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@2d8ee509, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@1b0621ce, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@1e177642, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@3fd99603]
 </pre>
 </span>
 </div>
@@ -134,7 +134,7 @@
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 3.5.1</a> at 22/01/2018 08:02:55 AM</p>
+<a href="http://www.gradle.org">Gradle 3.5.1</a> at 22/01/2018 08:50:07 AM</p>
 </div>
 </div>
 </body>

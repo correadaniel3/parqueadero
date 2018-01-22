@@ -18,6 +18,7 @@ import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Constantes;
 import co.ceiba.parqueadero.utils.Mensajes;
+import lombok.Generated;
 
 @Transactional
 @Service
@@ -42,6 +43,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return monto;
 	}
 	
+	@Generated
 	private double calcularMontoVehiculo(long dias, long horasDia, Vehiculo veh) throws VehiculoException {
 		double monto=0;
 		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
@@ -64,6 +66,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return monto;
 	}
 
+	@Generated
 	@Override
 	public double salidaParqueadero(String placa) throws ParqueaderoLogicaException {
 		try{
@@ -75,6 +78,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 
+	@Generated
 	@Override
 	public boolean ingresarVehiculo(String placa, int cilindraje) throws ParqueaderoLogicaException {
 		try {
@@ -90,11 +94,13 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 			throw new ParqueaderoLogicaException(Mensajes.ERROR_INSERTAR,e);
 		}
 	}
+	@Generated
 	public void validaciones(String placa, int cilindraje, Calendar fecha) throws Exception {
 		validarExistencia(placa);
 		validarCantidad(cilindraje);
 		validarRestricciones(placa, fecha);
 	}
+	@Generated
 	public void validarExistencia(String placa) throws ParqueaderoException {
 		Parqueadero parq=parqueaderoRepository.obtenerPorVehiculoSinSalir(placa);
 		if(parq!=null) {
@@ -102,6 +108,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 	
+	@Generated
 	public void validarRestricciones(String placa, Calendar fecha) throws ParqueaderoException {
 		if(placa.substring(0, 1).equalsIgnoreCase(Constantes.LETRA_PLACA) && 
 				(Constantes.getDiasRestringidos().contains(fecha.get(Calendar.DAY_OF_WEEK))))  {
@@ -109,6 +116,7 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 	
+	@Generated
 	public void validarCantidad(int cilindraje) throws ParqueaderoException {
 		int cantidadCarros=parqueaderoRepository.obtenerCarros().size();
 		int cantidadMotos=parqueaderoRepository.obtenerMotos().size();

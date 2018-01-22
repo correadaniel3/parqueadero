@@ -14,81 +14,86 @@ import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Mensajes;
+import lombok.Generated;
 
 @Transactional
 @Repository
-<span class="fc" id="L20">public class VehiculoRepositoryImpl implements VehiculoRepository {</span>
+<span class="fc" id="L21">public class VehiculoRepositoryImpl implements VehiculoRepository {</span>
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@Generated
 	@Override
 	@SuppressWarnings(&quot;unchecked&quot;)
 	public List&lt;Vehiculo&gt; obtenerTodos() throws VehiculoException {
 		try {
-<span class="nc" id="L29">			String hql = &quot;FROM Vehiculo&quot;;</span>
-<span class="nc" id="L30">			return (List&lt;Vehiculo&gt;) entityManager.createQuery(hql).getResultList();</span>
-<span class="nc" id="L31">		}catch(Exception e) {</span>
-<span class="nc" id="L32">			throw new VehiculoException(Mensajes.ERROR_TODOS_LOS_VEHICULOS, e);</span>
+			String hql = &quot;FROM Vehiculo&quot;;
+			return (List&lt;Vehiculo&gt;) entityManager.createQuery(hql).getResultList();
+		}catch(Exception e) {
+			throw new VehiculoException(Mensajes.ERROR_TODOS_LOS_VEHICULOS, e);
 		}
 	}
 
+	@Generated
 	@Override
 	public Vehiculo insertar(String placa, int cilindraje) throws VehiculoException {
 		Vehiculo vehiculo;
 		try {
-<span class="nc bnc" id="L40" title="All 2 branches missed.">			if(cilindraje==0) {</span>
-<span class="nc" id="L41">				vehiculo=new Carro(placa.toUpperCase()); </span>
+			if(cilindraje==0) {
+				vehiculo=new Carro(placa.toUpperCase()); 
 			}else {
-<span class="nc" id="L43">				vehiculo=new Moto(placa.toUpperCase(),cilindraje); </span>
+				vehiculo=new Moto(placa.toUpperCase(),cilindraje); 
 			}
-<span class="nc" id="L45">			entityManager.persist(vehiculo);</span>
-<span class="nc" id="L46">			return vehiculo;</span>
-<span class="nc" id="L47">		}catch(Exception e) {</span>
-<span class="nc" id="L48">			throw new VehiculoException(Mensajes.ERROR_INSERTAR,e); </span>
+			entityManager.persist(vehiculo);
+			return vehiculo;
+		}catch(Exception e) {
+			throw new VehiculoException(Mensajes.ERROR_INSERTAR,e); 
 		}
 	}
 
+	@Generated
 	@Override
 	public boolean eliminar(String placa) throws VehiculoException {
 		try{
-<span class="nc" id="L55">			Vehiculo vehiculo = null;</span>
-<span class="nc" id="L56">			String hql = &quot;FROM Vehiculo as veh WHERE veh.placa = ?&quot;;</span>
-<span class="nc" id="L57">			vehiculo = (Vehiculo) entityManager.createQuery(hql).setParameter(1, placa).getSingleResult();</span>
-<span class="nc" id="L58">			entityManager.remove(vehiculo); </span>
-<span class="nc" id="L59">			return true;</span>
-<span class="nc" id="L60">		}catch(Exception e) {</span>
-<span class="nc" id="L61">			throw new VehiculoException(Mensajes.ERROR_ELIMINAR,e);</span>
+			Vehiculo vehiculo = null;
+			String hql = &quot;FROM Vehiculo as veh WHERE veh.placa = ?&quot;;
+			vehiculo = (Vehiculo) entityManager.createQuery(hql).setParameter(1, placa).getSingleResult();
+			entityManager.remove(vehiculo); 
+			return true;
+		}catch(Exception e) {
+			throw new VehiculoException(Mensajes.ERROR_ELIMINAR,e);
 		}
 	}
 
 	
-
+	@Generated
 	@Override
 	public Vehiculo obtenerPorPlaca(String placa) throws VehiculoException {
 		try{
-<span class="nc" id="L70">			List&lt;Vehiculo&gt; vehiculos=obtenerTodos();</span>
-<span class="nc bnc" id="L71" title="All 2 branches missed.">			for(Vehiculo veh: vehiculos) {</span>
-<span class="nc bnc" id="L72" title="All 2 branches missed.">				if(veh.getPlaca().equals(placa)) {</span>
-<span class="nc" id="L73">					return veh;</span>
+			List&lt;Vehiculo&gt; vehiculos=obtenerTodos();
+			for(Vehiculo veh: vehiculos) {
+				if(veh.getPlaca().equals(placa)) {
+					return veh;
 				}
-<span class="nc" id="L75">			}</span>
-<span class="nc" id="L76">			return null;</span>
-<span class="nc" id="L77">		}catch(Exception e) {</span>
-<span class="nc" id="L78">			throw new VehiculoException(Mensajes.ERROR_OBTENER_VEHICULO,e);</span>
+			}
+			return null;
+		}catch(Exception e) {
+			throw new VehiculoException(Mensajes.ERROR_OBTENER_VEHICULO,e);
 		}
 	}
 	
+	@Generated
 	@Override
 	public Moto obtenerMotoPorPlaca(String placa) throws VehiculoException {
 		try {
-<span class="nc" id="L85">			String hql = &quot;FROM Moto moto WHERE moto.placa = ?&quot;;</span>
-<span class="nc" id="L86">			return (Moto) entityManager.createQuery(hql).setParameter(1, placa).getResultList().get(0);</span>
-<span class="nc" id="L87">		}catch(Exception e) {</span>
-<span class="nc" id="L88">			throw new VehiculoException(Mensajes.ERROR_OBTENER_MOTO, e);</span>
+			String hql = &quot;FROM Moto moto WHERE moto.placa = ?&quot;;
+			return (Moto) entityManager.createQuery(hql).setParameter(1, placa).getResultList().get(0);
+		}catch(Exception e) {
+			throw new VehiculoException(Mensajes.ERROR_OBTENER_MOTO, e);
 		}
 	}
 }
 		
 
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

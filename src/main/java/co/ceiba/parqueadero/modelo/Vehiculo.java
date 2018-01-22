@@ -11,6 +11,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Generated;
+
+
 
 @SuppressWarnings("serial")
 @Entity
@@ -32,6 +35,7 @@ public class Vehiculo implements Serializable {
 	@Column(name="vehiculo_tipo",insertable = false, updatable = false)
 	private String tipo;
 	
+	@Generated
 	public Vehiculo() {
 	}
 	

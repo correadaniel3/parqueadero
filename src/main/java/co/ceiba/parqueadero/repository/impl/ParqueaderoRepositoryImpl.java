@@ -15,6 +15,7 @@ import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Mensajes;
+import lombok.Generated;
 
 @Transactional
 @Repository
@@ -26,6 +27,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 	@Autowired
 	VehiculoRepository vehiculoRepository;
 	
+	@Generated
 	@Override
 	public boolean insertar(Vehiculo vehiculo, Calendar fechaIngreso) throws ParqueaderoException {
 		Parqueadero parq;
@@ -38,7 +40,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 
-
+	@Generated
 	@SuppressWarnings("unchecked")
 	@Override
 	public Parqueadero obtenerPorVehiculoSinSalir(String placa) throws ParqueaderoException {
@@ -55,6 +57,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 	
+	@Generated
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Parqueadero> obtenerVehiculos() throws ParqueaderoException {
@@ -67,7 +70,8 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_TODOS_SIN_SALIR,e);
 		}
 	}
-
+	
+	@Generated
 	@Override
 	public Parqueadero actualizar(String placa, Calendar fechaSalida) throws ParqueaderoException {
 		try {
@@ -80,6 +84,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 	
+	@Generated
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Parqueadero> obtenerCarros() throws ParqueaderoException {
@@ -91,6 +96,7 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 
+	@Generated
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Parqueadero> obtenerMotos() throws ParqueaderoException {

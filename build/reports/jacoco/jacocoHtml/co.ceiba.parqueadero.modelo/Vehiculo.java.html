@@ -11,6 +11,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.Generated;
+
+
 
 @SuppressWarnings(&quot;serial&quot;)
 @Entity
@@ -25,27 +28,28 @@ public class Vehiculo implements Serializable {
 	private String placa;
 	
 	public Vehiculo(String placa) {
-<span class="nc" id="L28">		super();</span>
-<span class="nc" id="L29">		this.placa=placa;</span>
-<span class="nc" id="L30">	}</span>
+<span class="fc" id="L31">		super();</span>
+<span class="fc" id="L32">		this.placa=placa;</span>
+<span class="fc" id="L33">	}</span>
 	
 	@Column(name=&quot;vehiculo_tipo&quot;,insertable = false, updatable = false)
 	private String tipo;
 	
-<span class="nc" id="L35">	public Vehiculo() {</span>
-<span class="nc" id="L36">	}</span>
+	@Generated
+	public Vehiculo() {
+	}
 	
 	public String getPlaca() {
-<span class="nc" id="L39">		return placa;</span>
+<span class="fc" id="L43">		return placa;</span>
 	}
 	
 	public String getTipo() {
-<span class="nc" id="L43">		return tipo;</span>
+<span class="fc" id="L47">		return tipo;</span>
 	}
 
 	public void setTipo(String tipo) {
-<span class="nc" id="L47">		this.tipo = tipo;</span>
-<span class="nc" id="L48">	}</span>
+<span class="fc" id="L51">		this.tipo = tipo;</span>
+<span class="fc" id="L52">	}</span>
 	
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

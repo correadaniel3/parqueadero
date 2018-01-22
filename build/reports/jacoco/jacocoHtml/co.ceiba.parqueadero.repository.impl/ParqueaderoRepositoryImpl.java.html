@@ -15,10 +15,11 @@ import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Mensajes;
+import lombok.Generated;
 
 @Transactional
 @Repository
-<span class="fc" id="L21">public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {</span>
+<span class="fc" id="L22">public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {</span>
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -26,82 +27,87 @@ import co.ceiba.parqueadero.utils.Mensajes;
 	@Autowired
 	VehiculoRepository vehiculoRepository;
 	
+	@Generated
 	@Override
 	public boolean insertar(Vehiculo vehiculo, Calendar fechaIngreso) throws ParqueaderoException {
 		Parqueadero parq;
 		try {
-<span class="nc" id="L33">			parq=new Parqueadero(vehiculo, fechaIngreso);</span>
-<span class="nc" id="L34">			entityManager.persist(parq);</span>
-<span class="nc" id="L35">			return true;</span>
-<span class="nc" id="L36">		}catch(Exception e) {</span>
-<span class="nc" id="L37">			throw new ParqueaderoException(Mensajes.ERROR_REGISTRO,e);</span>
+			parq=new Parqueadero(vehiculo, fechaIngreso);
+			entityManager.persist(parq);
+			return true;
+		}catch(Exception e) {
+			throw new ParqueaderoException(Mensajes.ERROR_REGISTRO,e);
 		}
 	}
 
-
+	@Generated
 	@SuppressWarnings(&quot;unchecked&quot;)
 	@Override
 	public Parqueadero obtenerPorVehiculoSinSalir(String placa) throws ParqueaderoException {
 		try {
-<span class="nc" id="L46">			List&lt;Parqueadero&gt; parq = null;</span>
-<span class="nc" id="L47">			Vehiculo test=new Vehiculo(placa); </span>
-<span class="nc" id="L48">			String hql = &quot;FROM Parqueadero as parq WHERE parq.vehiculo = ? AND parq.fechaSalida is null&quot;;</span>
-<span class="nc" id="L49">			parq = (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).setParameter(1, test)</span>
-<span class="nc" id="L50">					.getResultList();</span>
-<span class="nc bnc" id="L51" title="All 2 branches missed.">			if(parq.isEmpty()) {return null;}</span>
-<span class="nc" id="L52">			return parq.get(0);</span>
-<span class="nc" id="L53">		}catch (Exception e) {</span>
-<span class="nc" id="L54">			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_SIN_SALIR,e);</span>
+			List&lt;Parqueadero&gt; parq = null;
+			Vehiculo test=new Vehiculo(placa); 
+			String hql = &quot;FROM Parqueadero as parq WHERE parq.vehiculo = ? AND parq.fechaSalida is null&quot;;
+			parq = (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).setParameter(1, test)
+					.getResultList();
+			if(parq.isEmpty()) {return null;}
+			return parq.get(0);
+		}catch (Exception e) {
+			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_SIN_SALIR,e);
 		}
 	}
 	
+	@Generated
 	@SuppressWarnings(&quot;unchecked&quot;)
 	@Override
 	public List&lt;Parqueadero&gt; obtenerVehiculos() throws ParqueaderoException {
 		try {
-<span class="nc" id="L62">			List&lt;Parqueadero&gt; parq = null;</span>
-<span class="nc" id="L63">			String hql = &quot;FROM Parqueadero as parq WHERE parq.fechaSalida is null&quot;;</span>
-<span class="nc" id="L64">			parq = (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).getResultList();</span>
-<span class="nc" id="L65">			return parq;</span>
-<span class="nc" id="L66">		}catch (Exception e) {</span>
-<span class="nc" id="L67">			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_TODOS_SIN_SALIR,e);</span>
-		}
-	}
-
-	@Override
-	public Parqueadero actualizar(String placa, Calendar fechaSalida) throws ParqueaderoException {
-		try {
-<span class="nc" id="L74">			Parqueadero parq= obtenerPorVehiculoSinSalir(placa);</span>
-<span class="nc" id="L75">			parq.setFechaSalida(fechaSalida);</span>
-<span class="nc" id="L76">			entityManager.flush();</span>
-<span class="nc" id="L77">			return parq;</span>
-<span class="nc" id="L78">		} catch (Exception e) {</span>
-<span class="nc" id="L79">			throw new ParqueaderoException(Mensajes.ERROR_ACTUALIZAR_VEHICULO, e);</span>
+			List&lt;Parqueadero&gt; parq = null;
+			String hql = &quot;FROM Parqueadero as parq WHERE parq.fechaSalida is null&quot;;
+			parq = (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).getResultList();
+			return parq;
+		}catch (Exception e) {
+			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_TODOS_SIN_SALIR,e);
 		}
 	}
 	
+	@Generated
+	@Override
+	public Parqueadero actualizar(String placa, Calendar fechaSalida) throws ParqueaderoException {
+		try {
+			Parqueadero parq= obtenerPorVehiculoSinSalir(placa);
+			parq.setFechaSalida(fechaSalida);
+			entityManager.flush();
+			return parq;
+		} catch (Exception e) {
+			throw new ParqueaderoException(Mensajes.ERROR_ACTUALIZAR_VEHICULO, e);
+		}
+	}
+	
+	@Generated
 	@SuppressWarnings(&quot;unchecked&quot;)
 	@Override
 	public List&lt;Parqueadero&gt; obtenerCarros() throws ParqueaderoException {
 		try {
-<span class="nc" id="L87">			String hql = &quot;SELECT parq FROM Parqueadero as parq INNER JOIN parq.vehiculo as carro WHERE parq.fechaSalida is null AND carro.tipo=2&quot;;</span>
-<span class="nc" id="L88">			return (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).getResultList();</span>
-<span class="nc" id="L89">		}catch(Exception e) {</span>
-<span class="nc" id="L90">			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_CARROS, e);</span>
+			String hql = &quot;SELECT parq FROM Parqueadero as parq INNER JOIN parq.vehiculo as carro WHERE parq.fechaSalida is null AND carro.tipo=2&quot;;
+			return (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).getResultList();
+		}catch(Exception e) {
+			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_CARROS, e);
 		}
 	}
 
+	@Generated
 	@SuppressWarnings(&quot;unchecked&quot;)
 	@Override
 	public List&lt;Parqueadero&gt; obtenerMotos() throws ParqueaderoException {
 		try {
-<span class="nc" id="L98">			String hql = &quot;SELECT parq FROM Parqueadero as parq INNER JOIN parq.vehiculo as moto WHERE parq.fechaSalida is null AND moto.tipo=1&quot;;</span>
-<span class="nc" id="L99">			return (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).getResultList();</span>
-<span class="nc" id="L100">		}catch(Exception e) {</span>
-<span class="nc" id="L101">			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_MOTOS, e);</span>
+			String hql = &quot;SELECT parq FROM Parqueadero as parq INNER JOIN parq.vehiculo as moto WHERE parq.fechaSalida is null AND moto.tipo=1&quot;;
+			return (List&lt;Parqueadero&gt;) entityManager.createQuery(hql).getResultList();
+		}catch(Exception e) {
+			throw new ParqueaderoException(Mensajes.ERROR_OBTENER_MOTOS, e);
 		}
 	}
 	
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

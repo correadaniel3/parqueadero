@@ -15,6 +15,7 @@ import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.service.ParqueaderoService;
 import co.ceiba.parqueadero.utils.Mensajes;
+import lombok.Generated;
 
 @RestController
 public class ParqueaderoController {
@@ -22,6 +23,7 @@ public class ParqueaderoController {
 	@Autowired
 	ParqueaderoService parqueaderoService;
 	
+	@Generated
 	@CrossOrigin
 	 @RequestMapping(path="/ingresar/placa={placa}&cilindraje={cilindraje}", 
 			 method = RequestMethod.GET)
@@ -35,12 +37,14 @@ public class ParqueaderoController {
 				}
 	 }
 	 
+	@Generated
 	 @CrossOrigin
 	 @RequestMapping(path="/salir/placa={placa}", method = RequestMethod.GET)
 	 public double salir(@PathVariable String placa) throws ParqueaderoServiceException {
 				return parqueaderoService.salidaVehiculoParqueadero(placa); 
 	 }
 	 
+	@Generated
 	 @CrossOrigin
 	 @RequestMapping(path="/obtenerVehiculos", method = RequestMethod.GET)
 	 public List<Parqueadero> obtenerVehiculos() throws ParqueaderoServiceException {

@@ -15,40 +15,44 @@ import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.service.ParqueaderoService;
 import co.ceiba.parqueadero.utils.Mensajes;
+import lombok.Generated;
 
 @RestController
-<span class="fc" id="L20">public class ParqueaderoController {</span>
+<span class="fc" id="L21">public class ParqueaderoController {</span>
 	
 	@Autowired
 	ParqueaderoService parqueaderoService;
 	
+	@Generated
 	@CrossOrigin
 	 @RequestMapping(path=&quot;/ingresar/placa={placa}&amp;cilindraje={cilindraje}&quot;, 
 			 method = RequestMethod.GET)
 	 public boolean ingresar(@PathVariable String placa,
 			 @PathVariable String cilindraje) throws  ParqueaderoServiceException {
 				try {
-<span class="nc" id="L31">					return parqueaderoService.ingresarVehiculoParqueadero(placa, </span>
-<span class="nc" id="L32">							Integer.parseInt(cilindraje));</span>
-<span class="nc" id="L33">				} catch (NumberFormatException e) {</span>
-<span class="nc" id="L34">					throw new ParqueaderoServiceException(&quot;No se pudo convertir el numero&quot;);</span>
+					return parqueaderoService.ingresarVehiculoParqueadero(placa, 
+							Integer.parseInt(cilindraje));
+				} catch (NumberFormatException e) {
+					throw new ParqueaderoServiceException(&quot;No se pudo convertir el numero&quot;);
 				}
 	 }
 	 
+	@Generated
 	 @CrossOrigin
 	 @RequestMapping(path=&quot;/salir/placa={placa}&quot;, method = RequestMethod.GET)
 	 public double salir(@PathVariable String placa) throws ParqueaderoServiceException {
-<span class="nc" id="L41">				return parqueaderoService.salidaVehiculoParqueadero(placa); </span>
+				return parqueaderoService.salidaVehiculoParqueadero(placa); 
 	 }
 	 
+	@Generated
 	 @CrossOrigin
 	 @RequestMapping(path=&quot;/obtenerVehiculos&quot;, method = RequestMethod.GET)
 	 public List&lt;Parqueadero&gt; obtenerVehiculos() throws ParqueaderoServiceException {
 			try {
-<span class="nc" id="L48">				return parqueaderoService.obtenerVehiculos();</span>
-<span class="nc" id="L49">			} catch (ParqueaderoException e) {</span>
-<span class="nc" id="L50">				throw new ParqueaderoServiceException(Mensajes.ERROR_OBTENER_TODOS_SIN_SALIR);</span>
+				return parqueaderoService.obtenerVehiculos();
+			} catch (ParqueaderoException e) {
+				throw new ParqueaderoServiceException(Mensajes.ERROR_OBTENER_TODOS_SIN_SALIR);
 			} 
 	 }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

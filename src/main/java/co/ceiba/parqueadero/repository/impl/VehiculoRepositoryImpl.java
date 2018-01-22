@@ -14,6 +14,7 @@ import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Vehiculo;
 import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Mensajes;
+import lombok.Generated;
 
 @Transactional
 @Repository
@@ -22,6 +23,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	@Generated
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Vehiculo> obtenerTodos() throws VehiculoException {
@@ -33,6 +35,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 
+	@Generated
 	@Override
 	public Vehiculo insertar(String placa, int cilindraje) throws VehiculoException {
 		Vehiculo vehiculo;
@@ -49,6 +52,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 
+	@Generated
 	@Override
 	public boolean eliminar(String placa) throws VehiculoException {
 		try{
@@ -63,7 +67,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 	}
 
 	
-
+	@Generated
 	@Override
 	public Vehiculo obtenerPorPlaca(String placa) throws VehiculoException {
 		try{
@@ -79,6 +83,7 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 	
+	@Generated
 	@Override
 	public Moto obtenerMotoPorPlaca(String placa) throws VehiculoException {
 		try {
