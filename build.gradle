@@ -63,7 +63,7 @@ jacocoTestReport{
     }
      classDirectories = files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    '**/*model/**'
+                    '**/*modelo/**'
             ])
     })
 }
