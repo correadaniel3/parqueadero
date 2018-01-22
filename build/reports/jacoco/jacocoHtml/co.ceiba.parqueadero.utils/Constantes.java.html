@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Constantes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueadero</a> &gt; <a href="index.source.html" class="el_package">co.ceiba.parqueadero.utils</a> &gt; <span class="el_source">Constantes.java</span></div><h1>Constantes.java</h1><pre class="source lang-java linenums">package co.ceiba.parqueadero.utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public final class Constantes {
+	
+	public static final int CANTIDAD_MAXIMA_CARROS=20;
+	public static final int CANTIDAD_MAXIMA_MOTOS=10;
+	public static final double HORA_CARRO=1000;
+	public static final double HORA_MOTO=500;
+	public static final double DIA_CARRO=8000;
+	public static final double DIA_MOTO=4000;
+	public static final double CILINDRAJE=500;
+	public static final int MINIMO_HORAS_DIA=9;
+	public static final String LETRA_PLACA=&quot;A&quot;;
+<span class="fc" id="L20">	private static final List&lt;Integer&gt; DIAS_RESTRINGIDOS=new ArrayList&lt;&gt;();</span>
+	public static final String PATRON_PLACA=&quot;^[A-Z]{3}\\d{3}&quot;;
+	
+	static {
+<span class="fc" id="L24">		getDiasRestringidos().add(1);</span>
+<span class="fc" id="L25">		getDiasRestringidos().add(2);</span>
+<span class="fc" id="L26">	}</span>
+<span class="fc" id="L27">	private Constantes() {}</span>
+	
+	public static List&lt;Integer&gt; getDiasRestringidos() {
+<span class="fc" id="L30">		return DIAS_RESTRINGIDOS;</span>
+	}
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

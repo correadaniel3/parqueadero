@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Mensajes.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueadero</a> &gt; <a href="index.source.html" class="el_package">co.ceiba.parqueadero.utils</a> &gt; <span class="el_source">Mensajes.java</span></div><h1>Mensajes.java</h1><pre class="source lang-java linenums">package co.ceiba.parqueadero.utils;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Mensajes {
+	
+	//VehiculoRepository
+	public static final String ERROR_TODOS_LOS_VEHICULOS=&quot;Error al obtener todos los vehiculos de la BD&quot;;
+	public static final String ERROR_INSERTAR=&quot;No fue posible agregar el vehiculo en la base de datos&quot;;
+	public static final String ERROR_ELIMINAR=&quot;No fue posible eliminar el vehiculo de la base de datos&quot;;
+	public static final String ERROR_OBTENER_VEHICULO=&quot;No fue posible Obtener el vehiculo de la base de datos&quot;;
+	public static final String ERROR_OBTENER_MOTO=&quot;Error al obtener la moto de la BD&quot;;
+	
+	//ParqueaderoRepository
+	public static final String ERROR_REGISTRO=&quot;No fue posible agregar el registro al parqueadero&quot;;
+	public static final String ERROR_OBTENER_SIN_SALIR=&quot;No fue posible obtener el registro del vehiculo en el parqueadero&quot;;
+	public static final String ERROR_OBTENER_TODOS_SIN_SALIR=&quot;No fue posible obtener el registro de los vehiculos en el parqueadero&quot;;
+	public static final String ERROR_ACTUALIZAR_VEHICULO=&quot;No fue posible actualizar el registro del vehiculo&quot;;
+	public static final String ERROR_OBTENER_CARROS=&quot;Error al obtener todos los carros de la BD&quot;;
+	public static final String ERROR_OBTENER_MOTOS=&quot;Error al obtener todas las motos de la BD&quot;;
+	
+	//ParqueaderoLogica
+	public static final String ERROR_SALIDA_VEHICULO=&quot;no fue posible registrar la salida del vehiculo&quot;;
+	public static final String ERROR_DUPLICADO=&quot;El vehiculo ya se encuentra en el parqueadero&quot;;
+	public static final String RESTRICCION_PLACA=&quot;Esta placa no puede ser utilizada los dias lunes y domingo&quot;;
+	public static final String CAPACIDAD_CARROS=&quot;El parqueadero no puede recibir mas carros&quot;;
+	public static final String CAPACIDAD_MOTOS=&quot;El parqueadero no puede recibir mas motos&quot;;
+	
+	//ParqueaderoService
+	public static final String PLACA_VACIA=&quot;La placa del vehiculo no puede ser vacia&quot;;
+	public static final String PLACA_INVALIDA=&quot;No se ha ingresado una placa valida&quot;;
+	public static final String CILINDRAJE_INVALIDO=&quot;El cilindraje no puede ser menor a cero&quot;;
+	
+<span class="fc" id="L35">	private Mensajes() {}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

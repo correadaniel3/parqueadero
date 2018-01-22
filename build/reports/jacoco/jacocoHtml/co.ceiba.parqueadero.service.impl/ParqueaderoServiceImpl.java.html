@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParqueaderoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">parqueadero</a> &gt; <a href="index.source.html" class="el_package">co.ceiba.parqueadero.service.impl</a> &gt; <span class="el_source">ParqueaderoServiceImpl.java</span></div><h1>ParqueaderoServiceImpl.java</h1><pre class="source lang-java linenums">package co.ceiba.parqueadero.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import co.ceiba.parqueadero.exception.ParqueaderoException;
+import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
+import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
+import co.ceiba.parqueadero.logica.ParqueaderoLogica;
+import co.ceiba.parqueadero.modelo.Parqueadero;
+import co.ceiba.parqueadero.repository.ParqueaderoRepository;
+import co.ceiba.parqueadero.service.ParqueaderoService;
+import co.ceiba.parqueadero.utils.Constantes;
+import co.ceiba.parqueadero.utils.Mensajes;
+
+@Transactional
+@Service
+<span class="fc" id="L21">public class ParqueaderoServiceImpl implements ParqueaderoService {</span>
+	
+	@Autowired
+	ParqueaderoLogica parqueaderoLogica;
+	
+	@Autowired
+	ParqueaderoRepository parqueaderorepository;
+	
+	@Override
+	public boolean ingresarVehiculoParqueadero(String placa, int cilindraje) throws ParqueaderoServiceException {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		if(placa.isEmpty()) {</span>
+<span class="fc" id="L32">			throw new ParqueaderoServiceException(Mensajes.PLACA_VACIA);</span>
+		}
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if(!placa.matches(Constantes.PATRON_PLACA)) {</span>
+<span class="fc" id="L35">			throw new ParqueaderoServiceException(Mensajes.PLACA_INVALIDA);</span>
+		}
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">		if(cilindraje &lt;0) {</span>
+<span class="fc" id="L38">			throw new ParqueaderoServiceException(Mensajes.CILINDRAJE_INVALIDO);</span>
+		}
+		try {
+<span class="nc" id="L41">			return parqueaderoLogica.ingresarVehiculo(placa, cilindraje);</span>
+<span class="nc" id="L42">		} catch (ParqueaderoLogicaException e) {</span>
+<span class="nc" id="L43">			throw new ParqueaderoServiceException(e.getCause().toString().split(&quot;:&quot;)[1]);</span>
+		}
+	}
+
+	@Override
+	public double salidaVehiculoParqueadero(String placa) throws ParqueaderoServiceException {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		if(placa.isEmpty()) {</span>
+<span class="fc" id="L50">			throw new ParqueaderoServiceException(Mensajes.PLACA_VACIA);</span>
+		}
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if(!placa.matches(Constantes.PATRON_PLACA)) {</span>
+<span class="fc" id="L53">			throw new ParqueaderoServiceException(Mensajes.PLACA_INVALIDA);</span>
+		}
+		try {
+<span class="nc" id="L56">			return parqueaderoLogica.salidaParqueadero(placa);</span>
+<span class="nc" id="L57">		} catch (ParqueaderoLogicaException e) {</span>
+<span class="nc" id="L58">			throw new ParqueaderoServiceException(Mensajes.ERROR_SALIDA_VEHICULO,e);</span>
+		}
+}
+
+	@Override
+	public List&lt;Parqueadero&gt; obtenerVehiculos() throws ParqueaderoException {
+<span class="nc" id="L64">		return parqueaderorepository.obtenerVehiculos();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

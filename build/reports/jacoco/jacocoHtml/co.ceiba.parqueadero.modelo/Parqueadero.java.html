@@ -14,12 +14,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
+
+@SuppressWarnings(&quot;serial&quot;)
+@Entity 
 @Table(name=&quot;parqueadero&quot;)
 public class Parqueadero implements Serializable {
-	
-
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@Column(name=&quot;id&quot;)
@@ -38,26 +37,28 @@ public class Parqueadero implements Serializable {
 	@Column(name=&quot;fecha_salida&quot;)
 	private Calendar fechaSalida;
 
+<span class="nc" id="L40">	public Parqueadero() {}</span>
+	
 	public Parqueadero(Vehiculo vehiculo, Calendar fechaIngreso) {
-<span class="nc" id="L42">		super();</span>
-<span class="nc" id="L43">		this.vehiculo = vehiculo;</span>
-<span class="nc" id="L44">		this.fechaIngreso = fechaIngreso;</span>
-<span class="nc" id="L45">	}</span>
+<span class="nc" id="L43">		super();</span>
+<span class="nc" id="L44">		this.vehiculo = vehiculo;</span>
+<span class="nc" id="L45">		this.fechaIngreso = fechaIngreso;</span>
+<span class="nc" id="L46">	}</span>
 
 	public Calendar getFechaSalida() {
-<span class="nc" id="L48">		return fechaSalida;</span>
+<span class="nc" id="L49">		return fechaSalida;</span>
 	}
 
 	public void setFechaSalida(Calendar fechaSalida) {
-<span class="nc" id="L52">		this.fechaSalida = fechaSalida;</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L53">		this.fechaSalida = fechaSalida;</span>
+<span class="nc" id="L54">	}</span>
 
 	public Vehiculo getVehiculo() {
-<span class="nc" id="L56">		return vehiculo;</span>
+<span class="nc" id="L57">		return vehiculo;</span>
 	}
 
 	public Calendar getFechaIngreso() {
-<span class="nc" id="L60">		return fechaIngreso;</span>
+<span class="nc" id="L61">		return fechaIngreso;</span>
 	}
 	
 	

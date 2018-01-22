@@ -5,31 +5,30 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 
+@SuppressWarnings(&quot;serial&quot;)
 @Entity
 @DiscriminatorValue(&quot;1&quot;)
 public class Moto extends Vehiculo {
-	
-	private static final long serialVersionUID = 1L;
 	
 	@Column(name=&quot;cilindraje&quot;)
 	@NotNull
 	private int cilindraje;
 
 	public Moto(String placa, int cilindraje) {
-<span class="nc" id="L19">		super(placa);</span>
-<span class="nc" id="L20">		this.cilindraje=cilindraje;</span>
-<span class="nc" id="L21">	}</span>
+<span class="nc" id="L18">		super(placa);</span>
+<span class="nc" id="L19">		this.cilindraje=cilindraje;</span>
+<span class="nc" id="L20">	}</span>
 	
-<span class="fc" id="L23">	public Moto() {</span>
-<span class="fc" id="L24">	}</span>
+<span class="nc" id="L22">	public Moto() {</span>
+<span class="nc" id="L23">	}</span>
 	
 	public int getCilindraje() {
-<span class="nc" id="L27">		return cilindraje;</span>
+<span class="nc" id="L26">		return cilindraje;</span>
 	}
 	
 	public void setCilindraje(int cilindraje) {
-<span class="nc" id="L31">		this.cilindraje = cilindraje;</span>
-<span class="nc" id="L32">	}</span>
+<span class="nc" id="L30">		this.cilindraje = cilindraje;</span>
+<span class="nc" id="L31">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
