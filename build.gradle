@@ -65,8 +65,8 @@ jacocoTestReport{
             fileTree(dir: it, exclude: [
                     '**/*model/**'
             ])
-        })
-	}
+    })
 }
+
 jacocoTestReport.dependsOn(test)
 
