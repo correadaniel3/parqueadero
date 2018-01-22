@@ -52,6 +52,7 @@ test {
 	jacoco {
 		append = false
 		destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+		excludes = ['*Repository*']
 	}
 }
 
