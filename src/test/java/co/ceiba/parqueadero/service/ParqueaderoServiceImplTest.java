@@ -47,8 +47,6 @@ public class ParqueaderoServiceImplTest {
 	
 	@Test(expected=ParqueaderoServiceException.class)
 	public void ingresarVehiculoPlacaVacia() throws ParqueaderoServiceException, ParqueaderoLogicaException {
-		//Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("", 0));
-		Mockito.when(parqueaderoService.ingresarVehiculoParqueadero("", 0)).thenThrow(new ParqueaderoServiceException());
 		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("", 0));
 	}
 	
