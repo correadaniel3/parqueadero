@@ -3,42 +3,48 @@ package co.ceiba.parqueadero.service;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
 import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
+import co.ceiba.parqueadero.logica.ParqueaderoLogica;
+import co.ceiba.parqueadero.repository.ParqueaderoRepository;
+import co.ceiba.parqueadero.service.impl.ParqueaderoServiceImpl;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class ParqueaderoServiceImplTest {
 
-	@Autowired
-	ParqueaderoService parqueaderoService;
+	@InjectMocks
+	ParqueaderoServiceImpl parqueaderoService;
 	
 	@Mock
-	private ParqueaderoService parqService;
+	ParqueaderoLogica parqueaderoLogica;
+	
+	@Mock
+	ParqueaderoRepository parqueaderorepository;
 	
 	
 	@Test
 	public void testIngresarVehiculoParqueadero() throws ParqueaderoServiceException, ParqueaderoLogicaException {
-		boolean resultado=true;
 		
-		Mockito.when(parqService.ingresarVehiculoParqueadero("UVW987", 0)).thenReturn(resultado);
+		Mockito.when(parqueaderoLogica.ingresarVehiculo(Mockito.anyString(), Mockito.anyInt())).thenReturn(true);
 		
-		Assert.assertTrue(parqService.ingresarVehiculoParqueadero("UVW987", 0));
+		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("UVW987", 0));
 	}
 
 	@Test
 	public void testSalidaVehiculoParqueadero() throws ParqueaderoServiceException, ParqueaderoLogicaException {
 		double resultado=1000.0;
 		
-		Mockito.when(parqService.salidaVehiculoParqueadero("UVW987")).thenReturn(resultado);
+		Mockito.when(parqueaderoLogica.salidaParqueadero(Mockito.anyString())).thenReturn(1000.0);
 		
-		Assert.assertEquals(1000,parqService.salidaVehiculoParqueadero("UVW987"),0f);
+		Assert.assertEquals(resultado,parqueaderoService.salidaVehiculoParqueadero("UVW987"),0f);
 	}
 	
 	
@@ -56,13 +62,6 @@ public class ParqueaderoServiceImplTest {
 	public void ingresarVehiculoCilindrajeInvalido() throws ParqueaderoServiceException, ParqueaderoLogicaException {
 		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("BGR123", -12));
 	}
-	@Test(expected=ParqueaderoServiceException.class)
-	public void ingresarVehiculoExistente() throws ParqueaderoServiceException, ParqueaderoLogicaException {
-		
-		Mockito.when(parqService.ingresarVehiculoParqueadero("GBE568",0)).thenThrow(new ParqueaderoServiceException());
-		
-		Assert.assertTrue(parqService.ingresarVehiculoParqueadero("GBE568", 0));
-	}
 	
 	@Test(expected=ParqueaderoServiceException.class)
 	public void salidaVehiculoParqueaderoPlacaVacia() throws ParqueaderoServiceException, ParqueaderoLogicaException {
@@ -74,12 +73,5 @@ public class ParqueaderoServiceImplTest {
 		Assert.assertEquals(1000,parqueaderoService.salidaVehiculoParqueadero("Az01"),0f);
 	}
 	
-	@Test(expected=ParqueaderoServiceException.class)
-	public void salidaVehiculoParqueaderoNoExistente() throws ParqueaderoServiceException, ParqueaderoLogicaException {
-		
-		Mockito.when(parqService.salidaVehiculoParqueadero("GBE568")).thenThrow(new ParqueaderoServiceException());
-
-		Assert.assertEquals(1000,parqService.salidaVehiculoParqueadero("GBE568"),0f);
-	}
 
 }

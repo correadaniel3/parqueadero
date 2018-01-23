@@ -7,28 +7,32 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import co.ceiba.parqueadero.exception.ParqueaderoException;
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
 import co.ceiba.parqueadero.exception.VehiculoException;
-import co.ceiba.parqueadero.logica.ParqueaderoLogica;
+import co.ceiba.parqueadero.logica.impl.ParqueaderoLogicaImpl;
 import co.ceiba.parqueadero.modelo.Moto;
 import co.ceiba.parqueadero.modelo.Parqueadero;
 import co.ceiba.parqueadero.modelo.Vehiculo;
+import co.ceiba.parqueadero.repository.ParqueaderoRepository;
+import co.ceiba.parqueadero.repository.VehiculoRepository;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@RunWith(MockitoJUnitRunner.class)
 public class ParqueaderoLogicaImpltest {
 
-	@Mock
-	ParqueaderoLogica parqueaderoLogica;
+	@InjectMocks
+	ParqueaderoLogicaImpl parqueaderoLogica;
 	
-	@Autowired
-	ParqueaderoLogica parqLogica;
+	@Mock
+	ParqueaderoRepository parqueaderoRepository;
+	
+	@Mock
+	VehiculoRepository vehiculoRepository;
 	
 	Calendar salida;
 	Calendar entrada;
@@ -49,24 +53,25 @@ public class ParqueaderoLogicaImpltest {
 	}
 	
 	@Test
-	public void testIngresarVehiculo() throws ParqueaderoLogicaException {
-		boolean resultado= true;
+	public void testIngresarVehiculo() throws ParqueaderoLogicaException, ParqueaderoException, VehiculoException {
+		Vehiculo veh=new Vehiculo("FFF111");
 		
-		Mockito.when(parqueaderoLogica.ingresarVehiculo("ACB123", 0)).thenReturn(resultado);
+		Mockito.when(vehiculoRepository.obtenerPorPlaca(Mockito.anyString())).thenReturn(veh);
+		Mockito.when(parqueaderoRepository.insertar(Mockito.any(Vehiculo.class),Mockito.any(Calendar.class))).thenReturn(true);
 		
-		Assert.assertEquals(resultado, parqueaderoLogica.ingresarVehiculo("ACB123", 0));
+		Assert.assertTrue(parqueaderoLogica.ingresarVehiculo("FFF111", 0));
 	}
 	
 	
 	@Test
 	public void testCantidadHoras() {
 		salida.add(Calendar.HOUR_OF_DAY, 11);
-		Assert.assertEquals(11,parqLogica.cantidadHoras(entrada, salida));
+		Assert.assertEquals(11,parqueaderoLogica.cantidadHoras(entrada, salida));
 	}
 	@Test
 	public void testCantidadMinutos() {
 		salida.add(Calendar.MINUTE, 2);
-		Assert.assertEquals(2,parqLogica.cantidadMinutos(entrada, salida));
+		Assert.assertEquals(2,parqueaderoLogica.cantidadMinutos(entrada, salida));
 	}
 	
 	@Test
@@ -74,7 +79,7 @@ public class ParqueaderoLogicaImpltest {
 		salida.add(Calendar.DATE,1);
 		salida.add(Calendar.HOUR_OF_DAY,3);
 		parq.setFechaSalida(salida);
-		double monto=parqLogica.calcularMonto(parq);
+		double monto=parqueaderoLogica.calcularMonto(parq);
 		Assert.assertEquals(11000,monto,0f);
 	}
 	
@@ -82,7 +87,7 @@ public class ParqueaderoLogicaImpltest {
 	public void testCalcularMontoMenosDeUnDia() throws VehiculoException{
 		salida.add(Calendar.HOUR,11);
 		parq.setFechaSalida(salida);
-		double monto=parqLogica.calcularMonto(parq);
+		double monto=parqueaderoLogica.calcularMonto(parq);
 		Assert.assertEquals(8000,monto,0f);
 	}
 	
@@ -90,7 +95,7 @@ public class ParqueaderoLogicaImpltest {
 	public void testCalcularMontoMenosDeNueveHoras() throws VehiculoException{
 		salida.add(Calendar.HOUR_OF_DAY,5);
 		parq.setFechaSalida(salida);
-		double monto=parqLogica.calcularMonto(parq);
+		double monto=parqueaderoLogica.calcularMonto(parq);
 		Assert.assertEquals(5000,monto,0f);
 	}
 	@Test
@@ -99,7 +104,7 @@ public class ParqueaderoLogicaImpltest {
 		parq2.setFechaSalida(salida);
 		double respuesta=2500;
 		
-		Mockito.when(parqueaderoLogica.calcularMonto(parq2)).thenReturn(2500.0);
+		Mockito.when(vehiculoRepository.obtenerMotoPorPlaca(Mockito.anyString())).thenReturn((Moto)veh2);
 		
 		Assert.assertEquals(respuesta,parqueaderoLogica.calcularMonto(parq2),0f);
 	}
@@ -112,18 +117,25 @@ public class ParqueaderoLogicaImpltest {
 		parq2.setFechaSalida(salida);
 		double respuesta=4500;
 		
-		Mockito.when(parqueaderoLogica.calcularMonto(parq2)).thenReturn(4500.0);
+		Mockito.when(vehiculoRepository.obtenerMotoPorPlaca(Mockito.anyString())).thenReturn((Moto)veh2);
 		
 		Assert.assertEquals(respuesta,parqueaderoLogica.calcularMonto(parq2),0f);
 	}
 
 	@Test
-	public void testSalidaParqueadero() throws ParqueaderoLogicaException {
-		Double resultado=1000.0;
+	public void testSalidaParqueadero() throws ParqueaderoLogicaException, ParqueaderoException {
+		double resultado= 1000.0;
+		Calendar fecha=Calendar.getInstance();
+		Calendar salida=Calendar.getInstance();
+		Vehiculo veh= new Vehiculo("ACB123");
+		veh.setTipo("2");
+		Parqueadero parq=new Parqueadero(veh,fecha);
+		salida.add(Calendar.MINUTE, 5);
+		parq.setFechaSalida(salida);
+		Mockito.when(parqueaderoRepository.actualizar(Mockito.anyString(), Mockito.any(Calendar.class))).thenReturn(parq);
 		
-		Mockito.when(parqueaderoLogica.salidaParqueadero("XYZ105")).thenReturn(1000.0);
 		
-		Assert.assertEquals(resultado,parqueaderoLogica.salidaParqueadero("XYZ105"),0f);
+		Assert.assertEquals(resultado, parqueaderoLogica.salidaParqueadero("ACB123"),0f);
 	}
 
 	
