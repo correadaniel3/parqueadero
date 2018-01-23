@@ -13,7 +13,6 @@ import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
 import co.ceiba.parqueadero.logica.ParqueaderoLogica;
 import co.ceiba.parqueadero.repository.ParqueaderoRepository;
 import co.ceiba.parqueadero.service.impl.ParqueaderoServiceImpl;
-import co.ceiba.parqueadero.utils.Mensajes;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ParqueaderoServiceImplTest {
@@ -46,15 +45,9 @@ public class ParqueaderoServiceImplTest {
 	}
 	
 	
-	@Test
+	@Test(expected=ParqueaderoServiceException.class)
 	public void ingresarVehiculoPlacaVacia() throws ParqueaderoServiceException, ParqueaderoLogicaException {
-		//Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("", 0));
-		try {
-			parqueaderoService.ingresarVehiculoParqueadero("", 0);
-		    Assert.fail("MyException expected.");
-		  } catch (ParqueaderoServiceException expected) {
-		    Assert.assertEquals(Mensajes.PLACA_VACIA, expected.getMessage());
-		  }
+		Assert.assertTrue(parqueaderoService.ingresarVehiculoParqueadero("", 0));
 	}
 	
 	@Test(expected=ParqueaderoServiceException.class)
