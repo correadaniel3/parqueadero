@@ -92,6 +92,22 @@ public class ParqueaderoLogicaImpltest {
 	}
 	
 	@Test
+	public void testCalcularMontoCeroCarro() throws VehiculoException{
+		parq.setFechaSalida(salida);
+		double monto=parqueaderoLogica.calcularMonto(parq);
+		Assert.assertEquals(1000,monto,0f);
+	}
+	
+	@Test
+	public void testCalcularMontoCeroMoto() throws VehiculoException{
+		parq2.setFechaSalida(salida);
+		
+		Mockito.when(vehiculoRepository.obtenerMotoPorPlaca(Mockito.anyString())).thenReturn((Moto)veh2);
+
+		Assert.assertEquals(500,parqueaderoLogica.calcularMonto(parq2),0f);
+	}
+	
+	@Test
 	public void testCalcularMontoMenosDeNueveHoras() throws VehiculoException{
 		salida.add(Calendar.HOUR_OF_DAY,5);
 		parq.setFechaSalida(salida);

@@ -7,9 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.parqueadero.exception.ParqueaderoLogicaException;
 import co.ceiba.parqueadero.exception.ParqueaderoServiceException;
