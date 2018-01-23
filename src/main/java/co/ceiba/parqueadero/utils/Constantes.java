@@ -5,6 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase que define las constantes de la
+ * logica del negocio de la aplicacion
+ * @author daniel.correa
+ *
+ */
 @Component
 public final class Constantes {
 	

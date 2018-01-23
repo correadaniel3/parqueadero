@@ -2,6 +2,11 @@ package co.ceiba.parqueadero.exception;
 
 import lombok.Generated;
 
+/**
+ * Maneja las excepciones de la capa logica
+ * @author daniel.correa
+ *
+ */
 @Generated
 public class ParqueaderoLogicaException extends Exception {
 	

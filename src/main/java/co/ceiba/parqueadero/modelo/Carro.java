@@ -5,6 +5,12 @@ import javax.persistence.Entity;
 
 import lombok.Generated;
 
+/**
+ * POJO y mapeo de carro, es un tipo de vehiculo
+ * se añade el valor discriminante 2
+ * @author daniel.correa
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @DiscriminatorValue("2")

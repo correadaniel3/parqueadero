@@ -16,6 +16,12 @@ import co.ceiba.parqueadero.service.ParqueaderoService;
 import co.ceiba.parqueadero.utils.Constantes;
 import co.ceiba.parqueadero.utils.Mensajes;
 
+/**
+ * Se implementan los metodos que se conectaran con el controlador para exponer 
+ * los servicios REST
+ * @author daniel.correa
+ *
+ */
 @Transactional
 @Service
 public class ParqueaderoServiceImpl implements ParqueaderoService {
@@ -26,6 +32,10 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	@Autowired
 	ParqueaderoRepository parqueaderorepository;
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.service.ParqueaderoService#ingresarVehiculoParqueadero(java.lang.String, int)
+	 */
 	@Override
 	public boolean ingresarVehiculoParqueadero(String placa, int cilindraje) throws ParqueaderoServiceException {
 		if(placa.isEmpty()) {
@@ -44,6 +54,10 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		}
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.service.ParqueaderoService#salidaVehiculoParqueadero(java.lang.String)
+	 */
 	@Override
 	public double salidaVehiculoParqueadero(String placa) throws ParqueaderoServiceException {
 		if(placa.isEmpty()) {
@@ -59,6 +73,10 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		}
 }
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.service.ParqueaderoService#obtenerVehiculos()
+	 */
 	@Override
 	public List<Parqueadero> obtenerVehiculos() throws ParqueaderoException {
 		return parqueaderorepository.obtenerVehiculos();

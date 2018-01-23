@@ -17,12 +17,24 @@ import co.ceiba.parqueadero.service.ParqueaderoService;
 import co.ceiba.parqueadero.utils.Mensajes;
 import lombok.Generated;
 
+/**
+ * Clase que expone los servicios REST del parqueadero
+ * @author daniel.correa
+ *
+ */
 @RestController
 public class ParqueaderoController {
 	
 	@Autowired
 	ParqueaderoService parqueaderoService;
 	
+	/**
+	 * 
+	 * @param placa del vehiculo a ingresar
+	 * @param cilindraje en caso de ser cero se ingresa un carro, en otro caso se ingresa una moto
+	 * @return true si el vehiculo ingreso con exito
+	 * @throws ParqueaderoServiceException
+	 */
 	@Generated
 	@CrossOrigin
 	 @RequestMapping(path="/ingresar/placa={placa}&cilindraje={cilindraje}", 
@@ -37,6 +49,12 @@ public class ParqueaderoController {
 				}
 	 }
 	 
+	/**
+	 * 
+	 * @param placa del vehiculo a salir
+	 * @return monto a pagar por la estadia
+	 * @throws ParqueaderoServiceException
+	 */
 	@Generated
 	 @CrossOrigin
 	 @RequestMapping(path="/salir/placa={placa}", method = RequestMethod.GET)
@@ -44,6 +62,11 @@ public class ParqueaderoController {
 				return parqueaderoService.salidaVehiculoParqueadero(placa); 
 	 }
 	 
+	/**
+	 * 
+	 * @return Lista de todos los vehiculos que se encuentran en el parqueadero actualmente
+	 * @throws ParqueaderoServiceException
+	 */
 	@Generated
 	 @CrossOrigin
 	 @RequestMapping(path="/obtenerVehiculos", method = RequestMethod.GET)

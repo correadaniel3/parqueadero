@@ -14,7 +14,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Generated;
 
 
-
+/**
+ * POJO y mapeo de Vehiculo
+ * @author daniel.correa
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @Inheritance

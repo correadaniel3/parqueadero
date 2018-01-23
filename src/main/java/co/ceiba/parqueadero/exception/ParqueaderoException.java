@@ -2,6 +2,11 @@ package co.ceiba.parqueadero.exception;
 
 import lombok.Generated;
 
+/**
+ * Maneja las excepciones de la capa repository para parqueadero
+ * @author daniel.correa
+ *
+ */
 public class ParqueaderoException extends Exception{
 
 	private static final long serialVersionUID = 1L;

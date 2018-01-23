@@ -20,6 +20,11 @@ import co.ceiba.parqueadero.utils.Constantes;
 import co.ceiba.parqueadero.utils.Mensajes;
 import lombok.Generated;
 
+/**
+ * Se implementan los metodos de la logica del negocio del parqueadero
+ * @author daniel.correa
+ *
+ */
 @Transactional
 @Service
 public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
@@ -30,6 +35,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 	@Autowired
 	VehiculoRepository vehiculoRepository;
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.logica.ParqueaderoLogica#calcularMonto(co.ceiba.parqueadero.modelo.Parqueadero)
+	 */
 	@Override
 	public double calcularMonto(Parqueadero parqueadero) throws VehiculoException {
 		long horas=cantidadHoras(parqueadero.getFechaIngreso(),parqueadero.getFechaSalida());
@@ -43,7 +52,15 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return monto;
 	}
 	
-	@Generated
+	/**
+	 * se agrega logica en caso de que el vehiculo haya pasado menos de una hora
+	 * se cobre la cantidad de una hora
+	 * @param dias que ha pasado el vehiculo en el parqueadero
+	 * @param horasDia cantidad de horas dentro de un dia 
+	 * @param veh vehiculo a calcular el monto
+	 * @return monto a pagar por la estadia
+	 * @throws VehiculoException
+	 */
 	private double calcularMontoVehiculo(long dias, long horasDia, Vehiculo veh) throws VehiculoException {
 		double monto=0;
 		if(horasDia>=Constantes.MINIMO_HORAS_DIA) {
@@ -66,6 +83,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return monto;
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.logica.ParqueaderoLogica#salidaParqueadero(java.lang.String)
+	 */
 	@Generated
 	@Override
 	public double salidaParqueadero(String placa) throws ParqueaderoLogicaException {
@@ -78,6 +99,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.logica.ParqueaderoLogica#ingresarVehiculo(java.lang.String, int)
+	 */
 	@Generated
 	@Override
 	public boolean ingresarVehiculo(String placa, int cilindraje) throws ParqueaderoLogicaException {
@@ -94,12 +119,27 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 			throw new ParqueaderoLogicaException(Mensajes.ERROR_INSERTAR,e);
 		}
 	}
+	
+	/**
+	 * metodo que resume las validaciones de ingreso como la capacidad,
+	 * el dia y la placa del vehiculo
+	 * @param placa del vehiculo a validar ingreso
+	 * @param cilindraje del vehiculo
+	 * @param fecha fecha en la que ingresa el vehiculo
+	 * @throws Exception
+	 */
 	@Generated
 	public void validaciones(String placa, int cilindraje, Calendar fecha) throws Exception {
 		validarExistencia(placa);
 		validarCantidad(cilindraje);
 		validarRestricciones(placa, fecha);
 	}
+	
+	/**
+	 * Metodo que verifica si el vehiculo ya se encuentra en el parqueadero
+	 * @param placa del vehiculo
+	 * @throws ParqueaderoException
+	 */
 	@Generated
 	public void validarExistencia(String placa) throws ParqueaderoException {
 		Parqueadero parq=parqueaderoRepository.obtenerPorVehiculoSinSalir(placa);
@@ -108,6 +148,12 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 	
+	/**
+	 * Valida si la placa y el dia permite al vehiculo entrar al parqueadero
+	 * @param placa del vehiculo a validar
+	 * @param fecha de entrada
+	 * @throws ParqueaderoException
+	 */
 	@Generated
 	public void validarRestricciones(String placa, Calendar fecha) throws ParqueaderoException {
 		if(placa.substring(0, 1).equalsIgnoreCase(Constantes.LETRA_PLACA) && 
@@ -116,6 +162,11 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 	
+	/**
+	 * Valida la cantidad maxima de carros y motos que soporta el parqueadero
+	 * @param cilindraje necesario para verificar si el vehiculo es carro o moto
+	 * @throws ParqueaderoException
+	 */
 	@Generated
 	public void validarCantidad(int cilindraje) throws ParqueaderoException {
 		int cantidadCarros=parqueaderoRepository.obtenerCarros().size();
@@ -128,6 +179,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		}
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.logica.ParqueaderoLogica#cantidadHoras(java.util.Calendar, java.util.Calendar)
+	 */
 	@Override
 	public long cantidadHoras(Calendar ingreso, Calendar salida) {
 		long end= salida.getTimeInMillis();
@@ -135,6 +190,10 @@ public class ParqueaderoLogicaImpl implements ParqueaderoLogica {
 		return TimeUnit.MILLISECONDS.toHours(Math.abs(end - start));
 	}
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.logica.ParqueaderoLogica#cantidadMinutos(java.util.Calendar, java.util.Calendar)
+	 */
 	@Override
 	public long cantidadMinutos(Calendar ingreso, Calendar salida) {
 		long end= salida.getTimeInMillis();

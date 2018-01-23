@@ -14,7 +14,13 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-
+/**
+ * POJO y mapeo de parqueadero, esta clase
+ * tiene el proposito de controlar los vehiculos
+ * que entran y salen del parqueadero.
+ * @author daniel.correa
+ *
+ */
 @SuppressWarnings("serial")
 @Entity 
 @Table(name="parqueadero")

@@ -17,6 +17,12 @@ import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Mensajes;
 import lombok.Generated;
 
+/**
+ * Se implementan los metodos para operaciones sobre la base de datos para
+ * parqueadero
+ * @author daniel.correa
+ *
+ */
 @Transactional
 @Repository
 public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
@@ -27,6 +33,10 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 	@Autowired
 	VehiculoRepository vehiculoRepository;
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.ParqueaderoRepository#insertar(co.ceiba.parqueadero.modelo.Vehiculo, java.util.Calendar)
+	 */
 	@Generated
 	@Override
 	public boolean insertar(Vehiculo vehiculo, Calendar fechaIngreso) throws ParqueaderoException {
@@ -40,6 +50,10 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.ParqueaderoRepository#obtenerPorVehiculoSinSalir(java.lang.String)
+	 */
 	@Generated
 	@SuppressWarnings("unchecked")
 	@Override
@@ -57,6 +71,10 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.ParqueaderoRepository#obtenerVehiculos()
+	 */
 	@Generated
 	@SuppressWarnings("unchecked")
 	@Override
@@ -71,6 +89,10 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.ParqueaderoRepository#actualizar(java.lang.String, java.util.Calendar)
+	 */
 	@Generated
 	@Override
 	public Parqueadero actualizar(String placa, Calendar fechaSalida) throws ParqueaderoException {
@@ -84,6 +106,10 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.ParqueaderoRepository#obtenerCarros()
+	 */
 	@Generated
 	@SuppressWarnings("unchecked")
 	@Override
@@ -96,6 +122,10 @@ public class ParqueaderoRepositoryImpl implements ParqueaderoRepository {
 		}
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.ParqueaderoRepository#obtenerMotos()
+	 */
 	@Generated
 	@SuppressWarnings("unchecked")
 	@Override

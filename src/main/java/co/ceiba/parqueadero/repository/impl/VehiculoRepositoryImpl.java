@@ -16,6 +16,12 @@ import co.ceiba.parqueadero.repository.VehiculoRepository;
 import co.ceiba.parqueadero.utils.Mensajes;
 import lombok.Generated;
 
+/**
+ * Se implementan los metodos para operaciones sobre la base de datos para
+ * vehiculo
+ * @author daniel.correa
+ *
+ */
 @Transactional
 @Repository
 public class VehiculoRepositoryImpl implements VehiculoRepository {
@@ -23,6 +29,10 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.VehiculoRepository#obtenerTodos()
+	 */
 	@Generated
 	@Override
 	@SuppressWarnings("unchecked")
@@ -35,6 +45,10 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.VehiculoRepository#insertar(java.lang.String, int)
+	 */
 	@Generated
 	@Override
 	public Vehiculo insertar(String placa, int cilindraje) throws VehiculoException {
@@ -52,6 +66,10 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.VehiculoRepository#eliminar(java.lang.String)
+	 */
 	@Generated
 	@Override
 	public boolean eliminar(String placa) throws VehiculoException {
@@ -66,7 +84,10 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 
-	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.VehiculoRepository#obtenerPorPlaca(java.lang.String)
+	 */
 	@Generated
 	@Override
 	public Vehiculo obtenerPorPlaca(String placa) throws VehiculoException {
@@ -83,6 +104,10 @@ public class VehiculoRepositoryImpl implements VehiculoRepository {
 		}
 	}
 	
+	/*
+	 * 
+	 * @see co.ceiba.parqueadero.repository.VehiculoRepository#obtenerMotoPorPlaca(java.lang.String)
+	 */
 	@Generated
 	@Override
 	public Moto obtenerMotoPorPlaca(String placa) throws VehiculoException {

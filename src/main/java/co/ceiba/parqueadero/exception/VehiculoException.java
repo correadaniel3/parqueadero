@@ -2,6 +2,11 @@ package co.ceiba.parqueadero.exception;
 
 import lombok.Generated;
 
+/**
+ * Maneja las excepciones de la capa repository para vehiculo
+ * @author daniel.correa
+ *
+ */
 @Generated
 public class VehiculoException extends Exception {
 

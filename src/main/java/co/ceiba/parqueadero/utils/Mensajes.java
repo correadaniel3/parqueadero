@@ -2,6 +2,12 @@ package co.ceiba.parqueadero.utils;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Clase que implementa los mensajes de todos los mensajes de error
+ * que lanza la aplicacion, separados por capas.
+ * @author daniel.correa
+ *
+ */
 @Component
 public class Mensajes {
 	

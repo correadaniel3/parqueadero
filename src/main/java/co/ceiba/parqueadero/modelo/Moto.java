@@ -7,6 +7,14 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Generated;
 
+/**
+ * POJO y mapeo de moto, es un tipo de vehiculo
+ * se añade el parametro cilindraje que sera el
+ * distintivo entre carro y moto, ademas se añade
+ * el valor discriminante 1.
+ * @author daniel.correa
+ *
+ */
 @SuppressWarnings("serial")
 @Entity
 @DiscriminatorValue("1")
